@@ -1,32 +1,13 @@
-<p>&nbsp;</p>
-<p>&nbsp;</p>
-<p>&nbsp;</p>
-This repository contains slides and Jupyter notebooks for a workshop on Bayesian decision analysis.
+This repository contains slides and Jupyter notebooks for a workshop on Bayesian inference using PyMC.
 
-[The slides for the workshop are available as a Google doc](https://docs.google.com/presentation/d/e/2PACX-1vSqEEhwzKyzIRGORZpEuU-a0iFyePxslNBhRB6f-3wFVQjZlj119EXlAOTFz02WQzh1oYFYjG1-RWIf/pub).
+[The slides for the workshop are available as a Google doc]().
 
 For each of the notebooks below, you have two options: if you view the notebook on NBViewer, you can read it, but you can't run the code.  If you run the notebook on Colab, you'll be able to run the code, do the exercises, and save your modified version of the notebook in a Google Drive (if you have one).
 
-### 01_cookie
+### 01_rate
 
-[Click here to run this notebook on Colab](https://colab.research.google.com/github/AllenDowney/BayesianDecisionAnalysis/blob/main/01_cookie.ipynb) or [click here to read it on NBViewer](https://nbviewer.jupyter.org/github/AllenDowney/BayesianDecisionAnalysis/blob/main/01_cookie.ipynb)
+[Click here to run this notebook on Colab](https://colab.research.google.com/github/AllenDowney/BayesianInferencePyMC/blob/main/01_rate.ipynb) or [click here to read it on NBViewer](https://nbviewer.jupyter.org/github/AllenDowney/BayesianInferencePyMC/blob/main/01_rate.ipynb)
 
-[Then take this quiz](https://forms.gle/NEkARo9cHx3pdpAd9)
+[Then take this quiz]()
 
-### 02_pmf
 
-[Click here to run this notebook on Colab](https://colab.research.google.com/github/AllenDowney/BayesianDecisionAnalysis/blob/main/02_pmf.ipynb) or [click here to read it on NBViewer](https://nbviewer.jupyter.org/github/AllenDowney/BayesianDecisionAnalysis/blob/main/02_pmf.ipynb)
-
-[Then take this quiz](https://forms.gle/kwPHwUgWmX3PbtHy9)
-
-### 03_euro
-
-[Click here to run this notebook on Colab](https://colab.research.google.com/github/AllenDowney/BayesianDecisionAnalysis/blob/main/03_euro.ipynb) or [click here to read it on NBViewer](https://nbviewer.jupyter.org/github/AllenDowney/BayesianDecisionAnalysis/blob/main/03_euro.ipynb)
-
-[Then take this quiz](https://forms.gle/RK1c78kcCCRLVsaP8)
-
-### 04_bandit
-
-[Click here to run this notebook on Colab](https://colab.research.google.com/github/AllenDowney/BayesianDecisionAnalysis/blob/main/04_bandit.ipynb) or [click here to read it on NBViewer](https://nbviewer.jupyter.org/github/AllenDowney/BayesianDecisionAnalysis/blob/main/04_bandit.ipynb)
-
-[Then take this quiz](https://forms.gle/f3usP5buauV2hSb8A)
