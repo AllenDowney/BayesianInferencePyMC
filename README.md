@@ -2,7 +2,7 @@
 
 This repository contains slides and Jupyter notebooks for a workshop on Bayesian inference using PyMC.
 
-[The slides for the workshop are available as a Google doc]().
+[The slides for the workshop are available as a Google doc](https://docs.google.com/presentation/d/e/2PACX-1vRfzvjPnyBevd1VBt8yxwP23xuddrcYgu1mYOsTE9o_ViWJqoxWMhzgcw-FPhfeeobEbXYoeJvsPuQ-/pub).
 
 For each of the notebooks below, you have three options: 
 
