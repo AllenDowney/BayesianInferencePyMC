@@ -353,12 +353,10 @@ From that we can compute the probability that each team would win a rematch.</p>
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">pymc3</span> <span class="k">as</span> <span class="nn">pm</span>
 
-<span class="n">model</span> <span class="o">=</span> <span class="n">pm</span><span class="o">.</span><span class="n">Model</span><span class="p">()</span>
-
-<span class="k">with</span> <span class="n">model</span><span class="p">:</span>
+<span class="k">with</span> <span class="n">pm</span><span class="o">.</span><span class="n">Model</span><span class="p">()</span> <span class="k">as</span> <span class="n">model1</span><span class="p">:</span>
     <span class="n">mu</span> <span class="o">=</span> <span class="n">pm</span><span class="o">.</span><span class="n">Gamma</span><span class="p">(</span><span class="s1">&#39;mu&#39;</span><span class="p">,</span> <span class="n">alpha</span><span class="p">,</span> <span class="n">beta</span><span class="p">)</span>
     <span class="n">goals</span> <span class="o">=</span> <span class="n">pm</span><span class="o">.</span><span class="n">Poisson</span><span class="p">(</span><span class="s1">&#39;goals&#39;</span><span class="p">,</span> <span class="n">mu</span><span class="p">,</span> <span class="n">observed</span><span class="o">=</span><span class="mi">4</span><span class="p">)</span>
-    <span class="n">trace</span> <span class="o">=</span> <span class="n">pm</span><span class="o">.</span><span class="n">sample</span><span class="p">(</span><span class="mi">500</span><span class="p">)</span>
+    <span class="n">trace1</span> <span class="o">=</span> <span class="n">pm</span><span class="o">.</span><span class="n">sample</span><span class="p">(</span><span class="mi">500</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -387,6 +385,7 @@ NUTS: [mu]
   100.00% [6000/6000 00:00<00:00 Sampling 4 chains, 0 divergences]
 </div>
 </div><div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Sampling 4 chains for 1_000 tune and 500 draw iterations (4_000 + 2_000 draws total) took 1 seconds.
+The acceptance probability does not match the target. It is 0.9052933922028723, but should be close to 0.8. Try to increase the number of tuning steps.
 </pre></div>
 </div>
 </div>
@@ -394,7 +393,7 @@ NUTS: [mu]
 <p>And here’s the posterior distribution of <code class="docutils literal notranslate"><span class="pre">mu</span></code>.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">sample_posterior</span> <span class="o">=</span> <span class="n">trace</span><span class="p">[</span><span class="s1">&#39;mu&#39;</span><span class="p">]</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">sample_posterior</span> <span class="o">=</span> <span class="n">trace1</span><span class="p">[</span><span class="s1">&#39;mu&#39;</span><span class="p">]</span>
 <span class="nb">len</span><span class="p">(</span><span class="n">sample_posterior</span><span class="p">)</span>
 </pre></div>
 </div>
@@ -423,10 +422,10 @@ NUTS: [mu]
 <h2>Posterior predictive distribution<a class="headerlink" href="#posterior-predictive-distribution" title="Permalink to this headline">¶</a></h2>
 <p>That tells us what we should believe about <code class="docutils literal notranslate"><span class="pre">mu</span></code> after we see the data, but it doesn’t tell us how many goals we should expect in the future.
 For that, we need the <strong>posterior predictive distribution</strong>, which we can get by running <code class="docutils literal notranslate"><span class="pre">sample_posterior_predictive</span></code>:</p>
-<div class="cell docutils container">
+<div class="cell tag_fill-in docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">with</span> <span class="n">model</span><span class="p">:</span>
-    <span class="n">post_pred</span> <span class="o">=</span> <span class="n">pm</span><span class="o">.</span><span class="n">sample_posterior_predictive</span><span class="p">(</span><span class="n">trace</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">with</span> <span class="n">model1</span><span class="p">:</span>
+    <span class="n">post_pred</span> <span class="o">=</span> <span class="n">pm</span><span class="o">.</span><span class="n">sample_posterior_predictive</span><span class="p">(</span><span class="n">trace1</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -451,7 +450,7 @@ For that, we need the <strong>posterior predictive distribution</strong>, which 
 </div></div>
 </div>
 <p>The result is similar to the trace we got from <code class="docutils literal notranslate"><span class="pre">sample</span></code>, but it contains a sample of <code class="docutils literal notranslate"><span class="pre">goals</span></code> rather than <code class="docutils literal notranslate"><span class="pre">mu</span></code>.</p>
-<div class="cell docutils container">
+<div class="cell tag_fill-in docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">sample_post_pred</span> <span class="o">=</span> <span class="n">post_pred</span><span class="p">[</span><span class="s1">&#39;goals&#39;</span><span class="p">]</span>
 <span class="n">sample_post_pred</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span>
@@ -459,13 +458,7 @@ For that, we need the <strong>posterior predictive distribution</strong>, which 
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output traceback highlight-ipythontb notranslate"><div class="highlight"><pre><span></span><span class="gt">---------------------------------------------------------------------------</span>
-<span class="ne">KeyError</span><span class="g g-Whitespace">                                  </span>Traceback (most recent call last)
-<span class="o">/</span><span class="n">tmp</span><span class="o">/</span><span class="n">ipykernel_65197</span><span class="o">/</span><span class="mf">833615169.</span><span class="n">py</span> <span class="ow">in</span> <span class="o">&lt;</span><span class="n">module</span><span class="o">&gt;</span>
-<span class="ne">----&gt; </span><span class="mi">1</span> <span class="n">sample_post_pred</span> <span class="o">=</span> <span class="n">post_pred</span><span class="p">[</span><span class="s1">&#39;goals&#39;</span><span class="p">]</span>
-<span class="g g-Whitespace">      </span><span class="mi">2</span> <span class="n">sample_post_pred</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span>
-
-<span class="ne">KeyError</span>: &#39;goals&#39;
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>2.8725
 </pre></div>
 </div>
 </div>
@@ -489,14 +482,12 @@ For that, we need the <strong>posterior predictive distribution</strong>, which 
 The following model computes the posterior distribution for each team based on these outcomes.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">model</span> <span class="o">=</span> <span class="n">pm</span><span class="o">.</span><span class="n">Model</span><span class="p">()</span>
-
-<span class="k">with</span> <span class="n">model</span><span class="p">:</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">with</span> <span class="n">pm</span><span class="o">.</span><span class="n">Model</span><span class="p">()</span> <span class="k">as</span> <span class="n">model2</span><span class="p">:</span>
     <span class="n">mu_A</span> <span class="o">=</span> <span class="n">pm</span><span class="o">.</span><span class="n">Gamma</span><span class="p">(</span><span class="s1">&#39;mu_A&#39;</span><span class="p">,</span> <span class="n">alpha</span><span class="p">,</span> <span class="n">beta</span><span class="p">)</span>
     <span class="n">mu_B</span> <span class="o">=</span> <span class="n">pm</span><span class="o">.</span><span class="n">Gamma</span><span class="p">(</span><span class="s1">&#39;mu_B&#39;</span><span class="p">,</span> <span class="n">alpha</span><span class="p">,</span> <span class="n">beta</span><span class="p">)</span>
     <span class="n">goals_A</span> <span class="o">=</span> <span class="n">pm</span><span class="o">.</span><span class="n">Poisson</span><span class="p">(</span><span class="s1">&#39;goals_A&#39;</span><span class="p">,</span> <span class="n">mu_A</span><span class="p">,</span> <span class="n">observed</span><span class="o">=</span><span class="p">[</span><span class="mi">5</span><span class="p">,</span><span class="mi">3</span><span class="p">])</span>
     <span class="n">goals_B</span> <span class="o">=</span> <span class="n">pm</span><span class="o">.</span><span class="n">Poisson</span><span class="p">(</span><span class="s1">&#39;goals_B&#39;</span><span class="p">,</span> <span class="n">mu_B</span><span class="p">,</span> <span class="n">observed</span><span class="o">=</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">])</span>
-    <span class="n">trace</span> <span class="o">=</span> <span class="n">pm</span><span class="o">.</span><span class="n">sample</span><span class="p">(</span><span class="mi">500</span><span class="p">)</span>
+    <span class="n">trace2</span> <span class="o">=</span> <span class="n">pm</span><span class="o">.</span><span class="n">sample</span><span class="p">(</span><span class="mi">500</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -522,7 +513,7 @@ NUTS: [mu_B, mu_A]
         }
     </style>
   <progress value='6000' class='' max='6000' style='width:300px; height:20px; vertical-align: middle;'></progress>
-  100.00% [6000/6000 00:01<00:00 Sampling 4 chains, 0 divergences]
+  100.00% [6000/6000 00:00<00:00 Sampling 4 chains, 0 divergences]
 </div>
 </div><div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Sampling 4 chains for 1_000 tune and 500 draw iterations (4_000 + 2_000 draws total) took 1 seconds.
 </pre></div>
@@ -534,8 +525,8 @@ NUTS: [mu_B, mu_A]
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">arviz</span> <span class="k">as</span> <span class="nn">az</span>
 
-<span class="k">with</span> <span class="n">model</span><span class="p">:</span>
-    <span class="n">az</span><span class="o">.</span><span class="n">plot_trace</span><span class="p">(</span><span class="n">trace</span><span class="p">);</span>
+<span class="k">with</span> <span class="n">model2</span><span class="p">:</span>
+    <span class="n">az</span><span class="o">.</span><span class="n">plot_trace</span><span class="p">(</span><span class="n">trace2</span><span class="p">);</span>
 </pre></div>
 </div>
 </div>
@@ -546,14 +537,14 @@ NUTS: [mu_B, mu_A]
 <p>And here are the posterior distributions for <code class="docutils literal notranslate"><span class="pre">mu_B</span></code> and <code class="docutils literal notranslate"><span class="pre">mu_A</span></code>.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">mu_A</span> <span class="o">=</span> <span class="n">trace</span><span class="p">[</span><span class="s1">&#39;mu_A&#39;</span><span class="p">]</span>
-<span class="n">mu_B</span> <span class="o">=</span> <span class="n">trace</span><span class="p">[</span><span class="s1">&#39;mu_B&#39;</span><span class="p">]</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">mu_A</span> <span class="o">=</span> <span class="n">trace2</span><span class="p">[</span><span class="s1">&#39;mu_A&#39;</span><span class="p">]</span>
+<span class="n">mu_B</span> <span class="o">=</span> <span class="n">trace2</span><span class="p">[</span><span class="s1">&#39;mu_B&#39;</span><span class="p">]</span>
 <span class="n">mu_B</span><span class="o">.</span><span class="n">mean</span><span class="p">(),</span> <span class="n">mu_A</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(1.7039484152868747, 3.2390908952252166)
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(1.6979206839296863, 3.2345281980077862)
 </pre></div>
 </div>
 </div>
@@ -578,7 +569,7 @@ NUTS: [mu_B, mu_A]
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>0.9105
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>0.921
 </pre></div>
 </div>
 </div>
@@ -590,8 +581,8 @@ NUTS: [mu_B, mu_A]
 <p>To compute the probability that A wins the next game, we can use <code class="docutils literal notranslate"><span class="pre">sample_posterior_predictive</span></code> to generate predictions.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">with</span> <span class="n">model</span><span class="p">:</span>
-    <span class="n">post_pred</span> <span class="o">=</span> <span class="n">pm</span><span class="o">.</span><span class="n">sample_posterior_predictive</span><span class="p">(</span><span class="n">trace</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">with</span> <span class="n">model2</span><span class="p">:</span>
+    <span class="n">post_pred</span> <span class="o">=</span> <span class="n">pm</span><span class="o">.</span><span class="n">sample_posterior_predictive</span><span class="p">(</span><span class="n">trace2</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -653,7 +644,7 @@ NUTS: [mu_B, mu_A]
 <p>Team B is more likely than Team A to score 0, 1, or 2 goals.
 Team A is more likely to score 3 or more.</p>
 <p>Here’s the chance that A wins the next game.</p>
-<div class="cell docutils container">
+<div class="cell tag_fill-in docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">win</span> <span class="o">=</span> <span class="p">(</span><span class="n">goals_A</span> <span class="o">&gt;</span> <span class="n">goals_B</span><span class="p">)</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span>
 <span class="n">win</span>
@@ -661,13 +652,13 @@ Team A is more likely to score 3 or more.</p>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>0.655
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>0.6705
 </pre></div>
 </div>
 </div>
 </div>
 <p>The chance that they lose.</p>
-<div class="cell docutils container">
+<div class="cell tag_fill-in docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">lose</span> <span class="o">=</span> <span class="p">(</span><span class="n">goals_B</span> <span class="o">&gt;</span> <span class="n">goals_A</span><span class="p">)</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span>
 <span class="n">lose</span>
@@ -675,13 +666,13 @@ Team A is more likely to score 3 or more.</p>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>0.201
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>0.18525
 </pre></div>
 </div>
 </div>
 </div>
 <p>And the chance of a tie.</p>
-<div class="cell docutils container">
+<div class="cell tag_fill-in docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">tie</span> <span class="o">=</span> <span class="p">(</span><span class="n">goals_B</span> <span class="o">==</span> <span class="n">goals_A</span><span class="p">)</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span>
 <span class="n">tie</span>
@@ -689,7 +680,7 @@ Team A is more likely to score 3 or more.</p>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>0.144
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>0.14425
 </pre></div>
 </div>
 </div>
@@ -699,7 +690,7 @@ Team A is more likely to score 3 or more.</p>
 <h2>Sudden death<a class="headerlink" href="#sudden-death" title="Permalink to this headline">¶</a></h2>
 <p>In overtime, whichever team scores first wins. If we treat goal-scoring as a Poisson process, the time until the next goal is exponential with parameter <code class="docutils literal notranslate"><span class="pre">1/mu</span></code>.</p>
 <p>We can use the samples from the posterior distributions to generate samples from the posterior predictive distribution of time until the next goal, in units of games.</p>
-<div class="cell docutils container">
+<div class="cell tag_fill-in docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">t_A</span> <span class="o">=</span> <span class="n">pm</span><span class="o">.</span><span class="n">Exponential</span><span class="o">.</span><span class="n">dist</span><span class="p">(</span><span class="n">mu_A</span><span class="p">)</span><span class="o">.</span><span class="n">random</span><span class="p">(</span><span class="mi">1000</span><span class="p">)</span>
 <span class="n">t_A</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span>
@@ -707,12 +698,12 @@ Team A is more likely to score 3 or more.</p>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>0.3287123126190606
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>0.3406099892260252
 </pre></div>
 </div>
 </div>
 </div>
-<div class="cell docutils container">
+<div class="cell tag_fill-in docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">t_B</span> <span class="o">=</span> <span class="n">pm</span><span class="o">.</span><span class="n">Exponential</span><span class="o">.</span><span class="n">dist</span><span class="p">(</span><span class="n">mu_B</span><span class="p">)</span><span class="o">.</span><span class="n">random</span><span class="p">(</span><span class="mi">1000</span><span class="p">)</span>
 <span class="n">t_B</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span>
@@ -720,7 +711,7 @@ Team A is more likely to score 3 or more.</p>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>0.6992378173570362
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>0.7085185642938957
 </pre></div>
 </div>
 </div>

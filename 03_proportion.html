@@ -235,17 +235,8 @@
   </a>
  </li>
  <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#estimation">
-   Estimation
-  </a>
- </li>
- <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#the-posterior-predictive-distribution">
-   The posterior predictive distribution
-  </a>
- </li>
- <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#id1">
+  <a class="reference internal nav-link" href="#inference">
+   Inference
   </a>
  </li>
 </ul>
@@ -345,17 +336,23 @@ If we spin it on edge 250 times, we expect the number of heads to follow a binom
 <p>And we can use PyMC to generate a sample of values from that distribution.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">n</span> <span class="o">=</span> <span class="mi">250</span>
+<span class="n">p</span> <span class="o">=</span> <span class="mf">0.5</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell tag_fill-in docutils container">
+<div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">pymc3</span> <span class="k">as</span> <span class="nn">pm</span>
 
-<span class="n">n</span> <span class="o">=</span> <span class="mi">250</span>
-<span class="n">p</span> <span class="o">=</span> <span class="mf">0.5</span>
 <span class="n">sample_binomial</span> <span class="o">=</span> <span class="n">pm</span><span class="o">.</span><span class="n">Binomial</span><span class="o">.</span><span class="n">dist</span><span class="p">(</span><span class="n">n</span><span class="p">,</span> <span class="n">p</span><span class="p">)</span><span class="o">.</span><span class="n">random</span><span class="p">(</span><span class="n">size</span><span class="o">=</span><span class="mi">1000</span><span class="p">)</span>
 <span class="n">sample_binomial</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>125.28
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>125.411
 </pre></div>
 </div>
 </div>
@@ -381,7 +378,7 @@ If we spin it on edge 250 times, we expect the number of heads to follow a binom
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/03_proportion_11_0.png" src="_images/03_proportion_11_0.png" />
+<img alt="_images/03_proportion_12_0.png" src="_images/03_proportion_12_0.png" />
 </div>
 </div>
 </div>
@@ -401,7 +398,7 @@ And for the Euro problem, the probability of heads is what we would like to esti
 </div>
 </div>
 <p>And we can use PyMC to draw a sample from a beta distribution with given parameters.</p>
-<div class="cell docutils container">
+<div class="cell tag_fill-in docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">sample_beta</span> <span class="o">=</span> <span class="n">pm</span><span class="o">.</span><span class="n">Beta</span><span class="o">.</span><span class="n">dist</span><span class="p">(</span><span class="n">alpha</span><span class="o">=</span><span class="n">alpha</span><span class="p">,</span> <span class="n">beta</span><span class="o">=</span><span class="n">beta</span><span class="p">)</span><span class="o">.</span><span class="n">random</span><span class="p">(</span><span class="n">size</span><span class="o">=</span><span class="mi">1000</span><span class="p">)</span>
 <span class="n">sample_beta</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span>
@@ -409,7 +406,7 @@ And for the Euro problem, the probability of heads is what we would like to esti
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>0.49739075133374555
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>0.5025838401365187
 </pre></div>
 </div>
 </div>
@@ -435,7 +432,7 @@ And for the Euro problem, the probability of heads is what we would like to esti
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/03_proportion_18_0.png" src="_images/03_proportion_18_0.png" />
+<img alt="_images/03_proportion_19_0.png" src="_images/03_proportion_19_0.png" />
 </div>
 </div>
 <p><strong>Exercise:</strong> See what the distribution looks like with different values of <code class="docutils literal notranslate"><span class="pre">alpha</span></code> and <code class="docutils literal notranslate"><span class="pre">beta</span></code>.</p>
@@ -444,7 +441,7 @@ And for the Euro problem, the probability of heads is what we would like to esti
 <h2>The Beta-Binomial model<a class="headerlink" href="#the-beta-binomial-model" title="Permalink to this headline">¶</a></h2>
 <p>To model the coin-spinning process, I’ll draw values of <code class="docutils literal notranslate"><span class="pre">x</span></code> from a beta distribution and then draw values of <code class="docutils literal notranslate"><span class="pre">k</span></code> from a binomial distribution.</p>
 <p>Remember that <code class="docutils literal notranslate"><span class="pre">x</span></code> is the probability of heads, which is a continuous value between 0 and 1, and <code class="docutils literal notranslate"><span class="pre">k</span></code> is the number of heads, which is an integer between 0 and <code class="docutils literal notranslate"><span class="pre">n</span></code>.</p>
-<p>Here’s what the model looks like in PyMC</p>
+<p>Here’s what the model looks like in PyMC.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">alpha</span> <span class="o">=</span> <span class="mi">2</span>
@@ -454,12 +451,12 @@ And for the Euro problem, the probability of heads is what we would like to esti
 </div>
 </div>
 </div>
-<div class="cell docutils container">
+<div class="cell tag_fill-in docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">with</span> <span class="n">pm</span><span class="o">.</span><span class="n">Model</span><span class="p">()</span> <span class="k">as</span> <span class="n">model</span><span class="p">:</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">with</span> <span class="n">pm</span><span class="o">.</span><span class="n">Model</span><span class="p">()</span> <span class="k">as</span> <span class="n">model1</span><span class="p">:</span>
     <span class="n">x</span> <span class="o">=</span> <span class="n">pm</span><span class="o">.</span><span class="n">Beta</span><span class="p">(</span><span class="s1">&#39;x&#39;</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="n">alpha</span><span class="p">,</span> <span class="n">beta</span><span class="o">=</span><span class="n">alpha</span><span class="p">)</span>
     <span class="n">k</span> <span class="o">=</span> <span class="n">pm</span><span class="o">.</span><span class="n">Binomial</span><span class="p">(</span><span class="s1">&#39;k&#39;</span><span class="p">,</span> <span class="n">n</span><span class="o">=</span><span class="n">n</span><span class="p">,</span> <span class="n">p</span><span class="o">=</span><span class="n">x</span><span class="p">)</span>
-    <span class="n">trace</span> <span class="o">=</span> <span class="n">pm</span><span class="o">.</span><span class="n">sample_prior_predictive</span><span class="p">(</span><span class="mi">1000</span><span class="p">)</span>
+    <span class="n">trace1</span> <span class="o">=</span> <span class="n">pm</span><span class="o">.</span><span class="n">sample_prior_predictive</span><span class="p">(</span><span class="mi">1000</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -468,23 +465,23 @@ And for the Euro problem, the probability of heads is what we would like to esti
 <p>Here’s the graphical representation that shows this connection.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">pm</span><span class="o">.</span><span class="n">model_to_graphviz</span><span class="p">(</span><span class="n">model</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">pm</span><span class="o">.</span><span class="n">model_to_graphviz</span><span class="p">(</span><span class="n">model1</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/03_proportion_24_0.svg" src="_images/03_proportion_24_0.svg" /></div>
+<img alt="_images/03_proportion_25_0.svg" src="_images/03_proportion_25_0.svg" /></div>
 </div>
 <p>From the trace we can extract <code class="docutils literal notranslate"><span class="pre">x</span></code>, which is a sample from the prior distribution.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">sample_prior</span> <span class="o">=</span> <span class="n">trace</span><span class="p">[</span><span class="s1">&#39;x&#39;</span><span class="p">]</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">sample_prior</span> <span class="o">=</span> <span class="n">trace1</span><span class="p">[</span><span class="s1">&#39;x&#39;</span><span class="p">]</span>
 <span class="n">sample_prior</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>0.4854426970049223
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>0.5032355465488882
 </pre></div>
 </div>
 </div>
@@ -498,7 +495,7 @@ And for the Euro problem, the probability of heads is what we would like to esti
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/03_proportion_28_0.png" src="_images/03_proportion_28_0.png" />
+<img alt="_images/03_proportion_29_0.png" src="_images/03_proportion_29_0.png" />
 </div>
 </div>
 <p>This distribution represents a belief about coins; specifically, it suggests that most coins are close to fair, with values of <code class="docutils literal notranslate"><span class="pre">x</span></code> between 0.4 and 0.6, but some coins are strongly biased, with values of <code class="docutils literal notranslate"><span class="pre">x</span></code> near 0 and 1.</p>
@@ -511,13 +508,13 @@ And for the Euro problem, the probability of heads is what we would like to esti
 It represents the number of heads we expect, with <code class="docutils literal notranslate"><span class="pre">n=250</span></code>, based on the prior distribution of <code class="docutils literal notranslate"><span class="pre">x</span></code>.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">sample_prior_pred</span> <span class="o">=</span> <span class="n">trace</span><span class="p">[</span><span class="s1">&#39;k&#39;</span><span class="p">]</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">sample_prior_pred</span> <span class="o">=</span> <span class="n">trace1</span><span class="p">[</span><span class="s1">&#39;k&#39;</span><span class="p">]</span>
 <span class="n">sample_prior_pred</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>121.154
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>125.891
 </pre></div>
 </div>
 </div>
@@ -531,23 +528,23 @@ It represents the number of heads we expect, with <code class="docutils literal 
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/03_proportion_33_0.png" src="_images/03_proportion_33_0.png" />
+<img alt="_images/03_proportion_34_0.png" src="_images/03_proportion_34_0.png" />
 </div>
 </div>
 <p>If we believe what the prior distribution says about <code class="docutils literal notranslate"><span class="pre">x</span></code>, this is what we should believe about <code class="docutils literal notranslate"><span class="pre">k</span></code>.</p>
 <p>Now let’s use the data to update it.</p>
 </div>
-<div class="section" id="estimation">
-<h2>Estimation<a class="headerlink" href="#estimation" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="inference">
+<h2>Inference<a class="headerlink" href="#inference" title="Permalink to this headline">¶</a></h2>
 <p>From the previous model, it is a small change to draw a sample from the posterior distribution of <code class="docutils literal notranslate"><span class="pre">x</span></code>.</p>
-<div class="cell docutils container">
+<div class="cell tag_fill-in docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">k_obs</span> <span class="o">=</span> <span class="mi">140</span>
 
-<span class="k">with</span> <span class="n">pm</span><span class="o">.</span><span class="n">Model</span><span class="p">()</span> <span class="k">as</span> <span class="n">model</span><span class="p">:</span>
+<span class="k">with</span> <span class="n">pm</span><span class="o">.</span><span class="n">Model</span><span class="p">()</span> <span class="k">as</span> <span class="n">model2</span><span class="p">:</span>
     <span class="n">x</span> <span class="o">=</span> <span class="n">pm</span><span class="o">.</span><span class="n">Beta</span><span class="p">(</span><span class="s1">&#39;x&#39;</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">beta</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
     <span class="n">k</span> <span class="o">=</span> <span class="n">pm</span><span class="o">.</span><span class="n">Binomial</span><span class="p">(</span><span class="s1">&#39;k&#39;</span><span class="p">,</span> <span class="n">n</span><span class="o">=</span><span class="n">n</span><span class="p">,</span> <span class="n">p</span><span class="o">=</span><span class="n">x</span><span class="p">,</span> <span class="n">observed</span><span class="o">=</span><span class="n">k_obs</span><span class="p">)</span>
-    <span class="n">trace</span> <span class="o">=</span> <span class="n">pm</span><span class="o">.</span><span class="n">sample</span><span class="p">(</span><span class="mi">500</span><span class="p">)</span>
+    <span class="n">trace2</span> <span class="o">=</span> <span class="n">pm</span><span class="o">.</span><span class="n">sample</span><span class="p">(</span><span class="mi">500</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -573,9 +570,10 @@ NUTS: [x]
         }
     </style>
   <progress value='6000' class='' max='6000' style='width:300px; height:20px; vertical-align: middle;'></progress>
-  100.00% [6000/6000 00:00<00:00 Sampling 4 chains, 0 divergences]
+  100.00% [6000/6000 00:01<00:00 Sampling 4 chains, 0 divergences]
 </div>
 </div><div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Sampling 4 chains for 1_000 tune and 500 draw iterations (4_000 + 2_000 draws total) took 1 seconds.
+The acceptance probability does not match the target. It is 0.8920679281335565, but should be close to 0.8. Try to increase the number of tuning steps.
 </pre></div>
 </div>
 </div>
@@ -583,7 +581,7 @@ NUTS: [x]
 <p>The trace contains a sample of values from the posterior distribution of <code class="docutils literal notranslate"><span class="pre">x</span></code>.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">len</span><span class="p">(</span><span class="n">trace</span><span class="p">[</span><span class="s1">&#39;x&#39;</span><span class="p">])</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">len</span><span class="p">(</span><span class="n">trace2</span><span class="p">[</span><span class="s1">&#39;x&#39;</span><span class="p">])</span>
 </pre></div>
 </div>
 </div>
@@ -593,95 +591,36 @@ NUTS: [x]
 </div>
 </div>
 </div>
-<p>We can use <code class="docutils literal notranslate"><span class="pre">plot_trace</span></code> to see if the sample ran into any problems.</p>
+<p>We can use <code class="docutils literal notranslate"><span class="pre">plot_trace</span></code> to see if the sampler ran into any problems.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">arviz</span> <span class="k">as</span> <span class="nn">az</span>
 
-<span class="k">with</span> <span class="n">model</span><span class="p">:</span>
-    <span class="n">az</span><span class="o">.</span><span class="n">plot_trace</span><span class="p">(</span><span class="n">trace</span><span class="p">)</span>
+<span class="k">with</span> <span class="n">model2</span><span class="p">:</span>
+    <span class="n">az</span><span class="o">.</span><span class="n">plot_trace</span><span class="p">(</span><span class="n">trace2</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/03_proportion_40_0.png" src="_images/03_proportion_40_0.png" />
+<img alt="_images/03_proportion_41_0.png" src="_images/03_proportion_41_0.png" />
 </div>
 </div>
 <p>And <code class="docutils literal notranslate"><span class="pre">plot_posterior</span></code> to see the posterior distribution.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">arviz</span> <span class="k">as</span> <span class="nn">az</span>
-
-<span class="k">with</span> <span class="n">model</span><span class="p">:</span>
-    <span class="n">az</span><span class="o">.</span><span class="n">plot_posterior</span><span class="p">(</span><span class="n">trace</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">with</span> <span class="n">model2</span><span class="p">:</span>
+    <span class="n">az</span><span class="o">.</span><span class="n">plot_posterior</span><span class="p">(</span><span class="n">trace2</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/03_proportion_42_0.png" src="_images/03_proportion_42_0.png" />
+<img alt="_images/03_proportion_43_0.png" src="_images/03_proportion_43_0.png" />
 </div>
 </div>
 <p>Again, the 94% HDI is a credible interval that have a 94% chance of containing the true value of <code class="docutils literal notranslate"><span class="pre">x</span></code> for this coin.</p>
-</div>
-<div class="section" id="the-posterior-predictive-distribution">
-<h2>The posterior predictive distribution<a class="headerlink" href="#the-posterior-predictive-distribution" title="Permalink to this headline">¶</a></h2>
+<p><strong>Exercise:</strong></p>
 <p>In this example, we are primarily interested in estimating <code class="docutils literal notranslate"><span class="pre">x</span></code>, but we can also use the posterior predictive distribution to predict what would happen if we spun the same coin again.</p>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">with</span> <span class="n">model</span><span class="p">:</span>
-    <span class="n">post_pred</span> <span class="o">=</span> <span class="n">pm</span><span class="o">.</span><span class="n">sample_posterior_predictive</span><span class="p">(</span><span class="n">trace</span><span class="p">)</span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<div class="output text_html">
-<div>
-    <style>
-        /* Turns off some styling */
-        progress {
-            /* gets rid of default border in Firefox and Opera. */
-            border: none;
-            /* Needs to be in here for Safari polyfill so background images work as expected. */
-            background-size: auto;
-        }
-        .progress-bar-interrupted, .progress-bar-interrupted::-webkit-progress-bar {
-            background: #F44336;
-        }
-    </style>
-  <progress value='2000' class='' max='2000' style='width:300px; height:20px; vertical-align: middle;'></progress>
-  100.00% [2000/2000 00:00<00:00]
-</div>
-</div></div>
-</div>
-<p>The result is a trace that contains a sample of values for <code class="docutils literal notranslate"><span class="pre">k</span></code>.</p>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">sample_post_pred</span> <span class="o">=</span> <span class="n">post_pred</span><span class="p">[</span><span class="s1">&#39;k&#39;</span><span class="p">]</span>
-<span class="n">sample_post_pred</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>139.3705
-</pre></div>
-</div>
-</div>
-</div>
-<p>And here’s what it looks like.</p>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">plot_hist</span><span class="p">(</span><span class="n">sample_post_pred</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;posterior pred&#39;</span><span class="p">)</span>
-<span class="n">decorate_heads</span><span class="p">()</span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<img alt="_images/03_proportion_49_0.png" src="_images/03_proportion_49_0.png" />
-</div>
-</div>
-</div>
-<div class="section" id="id1">
-<h2><a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h2>
+<p>Use <code class="docutils literal notranslate"><span class="pre">sample_posterior_predictive</span></code> to generate a sample of <code class="docutils literal notranslate"><span class="pre">k</span></code>, then use <code class="docutils literal notranslate"><span class="pre">plot_hist</span></code> to plot the posterior predictive distribution.</p>
 </div>
 </div>
 

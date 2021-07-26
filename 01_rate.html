@@ -309,7 +309,7 @@ Based on the assumptions of a Poisson process, it turns out, the distribution of
 <p>To see what that distribution looks like, I’ll generate a random sample and plot a histogram.
 Normally I would use NumPy or SciPy to generate random values from a particular distribution, but since we’ll be using PyMC later, we’ll start using it now.
 Here’s how.</p>
-<div class="cell docutils container">
+<div class="cell tag_fill-in docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">pymc3</span> <span class="k">as</span> <span class="nn">pm</span>
 
@@ -320,7 +320,7 @@ Here’s how.</p>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>2.446
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>2.374
 </pre></div>
 </div>
 </div>
@@ -395,7 +395,7 @@ I’ll assign them values now, and at the end of the fourth notebook, we’ll se
 </div>
 </div>
 <p>I’ll use PyMC again to draw a sample from this distribution.</p>
-<div class="cell docutils container">
+<div class="cell tag_fill-in docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">sample_gamma</span> <span class="o">=</span> <span class="n">pm</span><span class="o">.</span><span class="n">Gamma</span><span class="o">.</span><span class="n">dist</span><span class="p">(</span><span class="n">alpha</span><span class="p">,</span> <span class="n">beta</span><span class="p">)</span><span class="o">.</span><span class="n">random</span><span class="p">(</span><span class="n">size</span><span class="o">=</span><span class="mi">1000</span><span class="p">)</span>
 </pre></div>
@@ -450,13 +450,11 @@ But for most teams, we expect goal-scoring rates near 2.</p>
 <p>As we’ve seen, we can use PyMC to generate random values from a distribution.
 But it is more common to use PyMC to create a <code class="docutils literal notranslate"><span class="pre">Model</span></code>, which is an object that represents random quantities and the relationships between them.</p>
 <p>We’ll start with a model that contains only one random quantity, and work our way up.</p>
-<div class="cell docutils container">
+<div class="cell tag_fill-in docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">model</span> <span class="o">=</span> <span class="n">pm</span><span class="o">.</span><span class="n">Model</span><span class="p">()</span>
-
-<span class="k">with</span> <span class="n">model</span><span class="p">:</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">with</span> <span class="n">pm</span><span class="o">.</span><span class="n">Model</span><span class="p">()</span> <span class="k">as</span> <span class="n">model1</span><span class="p">:</span>
     <span class="n">mu</span> <span class="o">=</span> <span class="n">pm</span><span class="o">.</span><span class="n">Gamma</span><span class="p">(</span><span class="s1">&#39;mu&#39;</span><span class="p">,</span> <span class="n">alpha</span><span class="p">,</span> <span class="n">beta</span><span class="p">)</span>
-    <span class="n">trace</span> <span class="o">=</span> <span class="n">pm</span><span class="o">.</span><span class="n">sample_prior_predictive</span><span class="p">(</span><span class="mi">1000</span><span class="p">)</span>
+    <span class="n">trace1</span> <span class="o">=</span> <span class="n">pm</span><span class="o">.</span><span class="n">sample_prior_predictive</span><span class="p">(</span><span class="mi">1000</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -468,15 +466,15 @@ The <code class="docutils literal notranslate"><span class="pre">with</span></co
 I’ll explain the name of this function soon.</p>
 <p>The result is a “trace”, which is like a dictionary that maps from names to samples.
 If we select the name <code class="docutils literal notranslate"><span class="pre">mu</span></code>, we get a sample from the gamma distribution.</p>
-<div class="cell docutils container">
+<div class="cell tag_fill-in docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">sample_prior</span> <span class="o">=</span> <span class="n">trace</span><span class="p">[</span><span class="s1">&#39;mu&#39;</span><span class="p">]</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">sample_prior</span> <span class="o">=</span> <span class="n">trace1</span><span class="p">[</span><span class="s1">&#39;mu&#39;</span><span class="p">]</span>
 <span class="n">sample_prior</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>2.4289891738366967
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>2.4011387700243962
 </pre></div>
 </div>
 </div>
@@ -502,14 +500,12 @@ And here’s what it looks like.</p>
 <p>Again, a model represents random quantities and the connections between them.
 So let’s add another quantity and a connection.</p>
 <p>Here’s a model that represents the distribution of <code class="docutils literal notranslate"><span class="pre">mu</span></code> <em>and</em> the distribution of goals scored.</p>
-<div class="cell docutils container">
+<div class="cell tag_fill-in docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">model</span> <span class="o">=</span> <span class="n">pm</span><span class="o">.</span><span class="n">Model</span><span class="p">()</span>
-
-<span class="k">with</span> <span class="n">model</span><span class="p">:</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">with</span> <span class="n">pm</span><span class="o">.</span><span class="n">Model</span><span class="p">()</span> <span class="k">as</span> <span class="n">model2</span><span class="p">:</span>
     <span class="n">mu</span> <span class="o">=</span> <span class="n">pm</span><span class="o">.</span><span class="n">Gamma</span><span class="p">(</span><span class="s1">&#39;mu&#39;</span><span class="p">,</span> <span class="n">alpha</span><span class="p">,</span> <span class="n">beta</span><span class="p">)</span>
     <span class="n">goals</span> <span class="o">=</span> <span class="n">pm</span><span class="o">.</span><span class="n">Poisson</span><span class="p">(</span><span class="s1">&#39;goals&#39;</span><span class="p">,</span> <span class="n">mu</span><span class="p">)</span>
-    <span class="n">trace</span> <span class="o">=</span> <span class="n">pm</span><span class="o">.</span><span class="n">sample_prior_predictive</span><span class="p">(</span><span class="mi">1000</span><span class="p">)</span>
+    <span class="n">trace2</span> <span class="o">=</span> <span class="n">pm</span><span class="o">.</span><span class="n">sample_prior_predictive</span><span class="p">(</span><span class="mi">1000</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -518,9 +514,9 @@ So let’s add another quantity and a connection.</p>
 And now <code class="docutils literal notranslate"><span class="pre">goals</span></code> is the number of goals scored in a particular game, drawn from a Poisson distribution.</p>
 <p>And, crucially, notice the connection between them: the parameter of the Poisson distribution is the value of <code class="docutils literal notranslate"><span class="pre">mu</span></code>drawn from the gamma distribution.</p>
 <p>PyMC provides a function that represents a model as a graph that shows the connections between quantities.</p>
-<div class="cell docutils container">
+<div class="cell tag_fill-in docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">pm</span><span class="o">.</span><span class="n">model_to_graphviz</span><span class="p">(</span><span class="n">model</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">pm</span><span class="o">.</span><span class="n">model_to_graphviz</span><span class="p">(</span><span class="n">model2</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -533,13 +529,13 @@ And now <code class="docutils literal notranslate"><span class="pre">goals</span
 <p>Let’s see what it looks like:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">sample_prior_pred</span> <span class="o">=</span> <span class="n">trace</span><span class="p">[</span><span class="s1">&#39;goals&#39;</span><span class="p">]</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">sample_prior_pred</span> <span class="o">=</span> <span class="n">trace2</span><span class="p">[</span><span class="s1">&#39;goals&#39;</span><span class="p">]</span>
 <span class="n">sample_prior_pred</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>2.424
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>2.368
 </pre></div>
 </div>
 </div>
@@ -568,7 +564,7 @@ And now <code class="docutils literal notranslate"><span class="pre">goals</span
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(2.446, 2.424)
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(2.426, 2.368)
 </pre></div>
 </div>
 </div>
@@ -581,7 +577,7 @@ And now <code class="docutils literal notranslate"><span class="pre">goals</span
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(1.5553404771946238, 1.8905618212584323)
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(1.530530626939559, 1.9059317931132793)
 </pre></div>
 </div>
 </div>
@@ -602,14 +598,12 @@ Since we have already specified the model, we can use it for inference with just
 </ul>
 <p>For data, let’s assume that Team A plays Team B and scores 4 goals.
 Here’s how we add it to the model:</p>
-<div class="cell docutils container">
+<div class="cell tag_fill-in docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">model</span> <span class="o">=</span> <span class="n">pm</span><span class="o">.</span><span class="n">Model</span><span class="p">()</span>
-
-<span class="k">with</span> <span class="n">model</span><span class="p">:</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">with</span> <span class="n">pm</span><span class="o">.</span><span class="n">Model</span><span class="p">()</span> <span class="k">as</span> <span class="n">model3</span><span class="p">:</span>
     <span class="n">mu</span> <span class="o">=</span> <span class="n">pm</span><span class="o">.</span><span class="n">Gamma</span><span class="p">(</span><span class="s1">&#39;mu&#39;</span><span class="p">,</span> <span class="n">alpha</span><span class="p">,</span> <span class="n">beta</span><span class="p">)</span>
     <span class="n">goals</span> <span class="o">=</span> <span class="n">pm</span><span class="o">.</span><span class="n">Poisson</span><span class="p">(</span><span class="s1">&#39;goals&#39;</span><span class="p">,</span> <span class="n">mu</span><span class="p">,</span> <span class="n">observed</span><span class="o">=</span><span class="mi">4</span><span class="p">)</span>
-    <span class="n">trace</span> <span class="o">=</span> <span class="n">pm</span><span class="o">.</span><span class="n">sample</span><span class="p">(</span><span class="mi">500</span><span class="p">)</span>
+    <span class="n">trace3</span> <span class="o">=</span> <span class="n">pm</span><span class="o">.</span><span class="n">sample</span><span class="p">(</span><span class="mi">500</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -652,7 +646,7 @@ The differences are:</p>
 <p>We select the sample from the trace in the same way:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">len</span><span class="p">(</span><span class="n">trace</span><span class="p">[</span><span class="s1">&#39;mu&#39;</span><span class="p">])</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">len</span><span class="p">(</span><span class="n">trace3</span><span class="p">[</span><span class="s1">&#39;mu&#39;</span><span class="p">])</span>
 </pre></div>
 </div>
 </div>
@@ -664,13 +658,13 @@ The differences are:</p>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">sample_posterior</span> <span class="o">=</span> <span class="n">trace</span><span class="p">[</span><span class="s1">&#39;mu&#39;</span><span class="p">]</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">sample_posterior</span> <span class="o">=</span> <span class="n">trace3</span><span class="p">[</span><span class="s1">&#39;mu&#39;</span><span class="p">]</span>
 <span class="n">sample_posterior</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>2.993009030995
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>2.978778258874917
 </pre></div>
 </div>
 </div>
@@ -693,7 +687,7 @@ And here’s what it looks like:</p>
 The team scored 4 goals, which is more than expected, so the posterior distribution is shifted to the right.</p>
 <p>The mean of the posterior distribution is about 3, so it falls between the prior expectation and the observed outcome.</p>
 <p>We can also use ArviZ to visualize the posterior distribution and compute summary statistics.</p>
-<div class="cell docutils container">
+<div class="cell tag_fill-in docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">arviz</span> <span class="k">as</span> <span class="nn">az</span>
 
@@ -724,9 +718,7 @@ The team scored 4 goals, which is more than expected, so the posterior distribut
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">model</span> <span class="o">=</span> <span class="n">pm</span><span class="o">.</span><span class="n">Model</span><span class="p">()</span>
-
-<span class="k">with</span> <span class="n">model</span><span class="p">:</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">with</span> <span class="n">pm</span><span class="o">.</span><span class="n">Model</span><span class="p">()</span> <span class="k">as</span> <span class="n">model4</span><span class="p">:</span>
     <span class="n">mu_A</span> <span class="o">=</span> <span class="n">pm</span><span class="o">.</span><span class="n">Gamma</span><span class="p">(</span><span class="s1">&#39;mu_A&#39;</span><span class="p">,</span> <span class="n">alpha</span><span class="p">,</span> <span class="n">beta</span><span class="p">)</span>
     <span class="n">mu_B</span> <span class="o">=</span> <span class="n">pm</span><span class="o">.</span><span class="n">Gamma</span><span class="p">(</span><span class="s1">&#39;mu_B&#39;</span><span class="p">,</span> <span class="n">alpha</span><span class="p">,</span> <span class="n">beta</span><span class="p">)</span>
     <span class="n">goals_A</span> <span class="o">=</span> <span class="n">pm</span><span class="o">.</span><span class="n">Poisson</span><span class="p">(</span><span class="s1">&#39;goals_A&#39;</span><span class="p">,</span> <span class="n">mu_A</span><span class="p">,</span> <span class="n">observed</span><span class="o">=</span><span class="p">[</span><span class="mi">5</span><span class="p">])</span>
@@ -738,7 +730,7 @@ The team scored 4 goals, which is more than expected, so the posterior distribut
 <p>Here’s the graphical representation of this model.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">pm</span><span class="o">.</span><span class="n">model_to_graphviz</span><span class="p">(</span><span class="n">model</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">pm</span><span class="o">.</span><span class="n">model_to_graphviz</span><span class="p">(</span><span class="n">model4</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -748,8 +740,8 @@ The team scored 4 goals, which is more than expected, so the posterior distribut
 <p>And now we can run the sampler.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">with</span> <span class="n">model</span><span class="p">:</span>
-    <span class="n">trace</span> <span class="o">=</span> <span class="n">pm</span><span class="o">.</span><span class="n">sample</span><span class="p">(</span><span class="mi">500</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">with</span> <span class="n">model4</span><span class="p">:</span>
+    <span class="n">trace4</span> <span class="o">=</span> <span class="n">pm</span><span class="o">.</span><span class="n">sample</span><span class="p">(</span><span class="mi">500</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -775,7 +767,7 @@ NUTS: [mu_B, mu_A]
         }
     </style>
   <progress value='6000' class='' max='6000' style='width:300px; height:20px; vertical-align: middle;'></progress>
-  100.00% [6000/6000 00:01<00:00 Sampling 4 chains, 0 divergences]
+  100.00% [6000/6000 00:00<00:00 Sampling 4 chains, 0 divergences]
 </div>
 </div><div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Sampling 4 chains for 1_000 tune and 500 draw iterations (4_000 + 2_000 draws total) took 1 seconds.
 </pre></div>
@@ -783,10 +775,10 @@ NUTS: [mu_B, mu_A]
 </div>
 </div>
 <p>We can use <code class="docutils literal notranslate"><span class="pre">plot_trace</span></code> to review the results and do some visual diagnostics.</p>
-<div class="cell docutils container">
+<div class="cell tag_fill-in docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">with</span> <span class="n">model</span><span class="p">:</span>
-    <span class="n">az</span><span class="o">.</span><span class="n">plot_trace</span><span class="p">(</span><span class="n">trace</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">with</span> <span class="n">model4</span><span class="p">:</span>
+    <span class="n">az</span><span class="o">.</span><span class="n">plot_trace</span><span class="p">(</span><span class="n">trace4</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -803,14 +795,14 @@ NUTS: [mu_B, mu_A]
 <p>Here are the posterior distribitions for <code class="docutils literal notranslate"><span class="pre">mu_B</span></code> and <code class="docutils literal notranslate"><span class="pre">mu_A</span></code>.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">mu_A</span> <span class="o">=</span> <span class="n">trace</span><span class="p">[</span><span class="s1">&#39;mu_A&#39;</span><span class="p">]</span>
-<span class="n">mu_B</span> <span class="o">=</span> <span class="n">trace</span><span class="p">[</span><span class="s1">&#39;mu_B&#39;</span><span class="p">]</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">mu_A</span> <span class="o">=</span> <span class="n">trace4</span><span class="p">[</span><span class="s1">&#39;mu_A&#39;</span><span class="p">]</span>
+<span class="n">mu_B</span> <span class="o">=</span> <span class="n">trace4</span><span class="p">[</span><span class="s1">&#39;mu_B&#39;</span><span class="p">]</span>
 <span class="n">mu_B</span><span class="o">.</span><span class="n">mean</span><span class="p">(),</span> <span class="n">mu_A</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(1.95445465497946, 3.2912325706424594)
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(1.9426961698474807, 3.3338668957789968)
 </pre></div>
 </div>
 </div>
@@ -832,14 +824,14 @@ NUTS: [mu_B, mu_A]
 <h2>Probability of superiority<a class="headerlink" href="#probability-of-superiority" title="Permalink to this headline">¶</a></h2>
 <p>On the basis of one game, how confident should we be that Team A is the better team?
 One way to answer this question is to compute the <strong>probability of superiority</strong>, which is the chance that a random value from the Team A posterior distribution exceeds a random value from the Team B posterior distribution.</p>
-<div class="cell docutils container">
+<div class="cell tag_fill-in docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="p">(</span><span class="n">mu_A</span> <span class="o">&gt;</span> <span class="n">mu_B</span><span class="p">)</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>0.8485
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>0.8575
 </pre></div>
 </div>
 </div>

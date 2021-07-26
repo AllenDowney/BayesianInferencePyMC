@@ -360,11 +360,11 @@ Here’s a PyMC model that does that.</p>
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">pymc3</span> <span class="k">as</span> <span class="nn">pm</span>
 
 <span class="n">n</span> <span class="o">=</span> <span class="mi">250</span>
-<span class="k">with</span> <span class="n">pm</span><span class="o">.</span><span class="n">Model</span><span class="p">()</span> <span class="k">as</span> <span class="n">model</span><span class="p">:</span>
+<span class="k">with</span> <span class="n">pm</span><span class="o">.</span><span class="n">Model</span><span class="p">()</span> <span class="k">as</span> <span class="n">model1</span><span class="p">:</span>
     <span class="n">x1</span> <span class="o">=</span> <span class="n">pm</span><span class="o">.</span><span class="n">Beta</span><span class="p">(</span><span class="s1">&#39;x1&#39;</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">beta</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
     <span class="n">x2</span> <span class="o">=</span> <span class="n">pm</span><span class="o">.</span><span class="n">Beta</span><span class="p">(</span><span class="s1">&#39;x2&#39;</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">beta</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
     <span class="n">k1</span> <span class="o">=</span> <span class="n">pm</span><span class="o">.</span><span class="n">Binomial</span><span class="p">(</span><span class="s1">&#39;k1&#39;</span><span class="p">,</span> <span class="n">n</span><span class="o">=</span><span class="n">n</span><span class="p">,</span> <span class="n">p</span><span class="o">=</span><span class="n">x1</span><span class="p">,</span> <span class="n">observed</span><span class="o">=</span><span class="mi">140</span><span class="p">)</span>
-    <span class="n">k2</span> <span class="o">=</span> <span class="n">pm</span><span class="o">.</span><span class="n">Binomial</span><span class="p">(</span><span class="s1">&#39;k2&#39;</span><span class="p">,</span> <span class="n">n</span><span class="o">=</span><span class="n">n</span><span class="p">,</span> <span class="n">p</span><span class="o">=</span><span class="n">x2</span><span class="p">,</span> <span class="n">observed</span><span class="o">=</span><span class="mi">110</span><span class="p">)</span>    
+    <span class="n">k2</span> <span class="o">=</span> <span class="n">pm</span><span class="o">.</span><span class="n">Binomial</span><span class="p">(</span><span class="s1">&#39;k2&#39;</span><span class="p">,</span> <span class="n">n</span><span class="o">=</span><span class="n">n</span><span class="p">,</span> <span class="n">p</span><span class="o">=</span><span class="n">x2</span><span class="p">,</span> <span class="n">observed</span><span class="o">=</span><span class="mi">120</span><span class="p">)</span>    
 </pre></div>
 </div>
 </div>
@@ -372,7 +372,7 @@ Here’s a PyMC model that does that.</p>
 <p>Here’s the graphical representation of the model.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">pm</span><span class="o">.</span><span class="n">model_to_graphviz</span><span class="p">(</span><span class="n">model</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">pm</span><span class="o">.</span><span class="n">model_to_graphviz</span><span class="p">(</span><span class="n">model1</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -382,8 +382,8 @@ Here’s a PyMC model that does that.</p>
 <p>Now let’s run the sampler.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">with</span> <span class="n">model</span><span class="p">:</span>
-    <span class="n">trace</span> <span class="o">=</span> <span class="n">pm</span><span class="o">.</span><span class="n">sample</span><span class="p">(</span><span class="mi">500</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">with</span> <span class="n">model1</span><span class="p">:</span>
+    <span class="n">trace1</span> <span class="o">=</span> <span class="n">pm</span><span class="o">.</span><span class="n">sample</span><span class="p">(</span><span class="mi">500</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -421,8 +421,8 @@ NUTS: [x2, x1]
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">arviz</span> <span class="k">as</span> <span class="nn">az</span>
 
-<span class="k">with</span> <span class="n">model</span><span class="p">:</span>
-    <span class="n">az</span><span class="o">.</span><span class="n">plot_posterior</span><span class="p">(</span><span class="n">trace</span><span class="p">)</span>
+<span class="k">with</span> <span class="n">model1</span><span class="p">:</span>
+    <span class="n">az</span><span class="o">.</span><span class="n">plot_posterior</span><span class="p">(</span><span class="n">trace1</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -432,7 +432,7 @@ NUTS: [x2, x1]
 </div>
 <p>The results for the first coin are about the same as what we saw in the previous notebook. The results for the second coin are similar, but the center of the distribution is lower, because the observed value of <code class="docutils literal notranslate"><span class="pre">k</span></code> is smaller.</p>
 <p>This model is not exactly wrong, but it is not as right as it could be, because we are leaving some information on the table.</p>
-<p>That’s because the data we have about each coin actually provides two kinds of information: it tells us about each coin individually, and it also tells us about coins in general.</p>
+<p>That’s because the data we have about each coin actually provides two kinds of information: it tells us about each coin specifically, and it also tells us about coins in general.</p>
 <p>By estimating <code class="docutils literal notranslate"><span class="pre">x1</span></code> and <code class="docutils literal notranslate"><span class="pre">x2</span></code> separately, we are using the first kind of information, but not the second.</p>
 <p>An alternative is to use a <strong>hierarchical model</strong>.</p>
 </div>
@@ -441,10 +441,10 @@ NUTS: [x2, x1]
 <p>In the previous model, the prior distribution is a beta distribution with values of <code class="docutils literal notranslate"><span class="pre">alpha</span></code> and <code class="docutils literal notranslate"><span class="pre">beta</span></code> that I chose with the intention of representing the information we have about coins and their probability of coming up heads.
 But my choice of these parameters was almost arbitrary.</p>
 <p>Instead of choosing these parameters ourselves, an alternative is to add them to the model and use the data to estimate them.</p>
-<p>Here’s a version of the previous model where <code class="docutils literal notranslate"><span class="pre">alpha</span></code> and <code class="docutils literal notranslate"><span class="pre">beta</span></code> are values drawn from a gamma distribution.</p>
-<div class="cell docutils container">
+<p>Here’s a version of the previous model where <code class="docutils literal notranslate"><span class="pre">alpha</span></code> and <code class="docutils literal notranslate"><span class="pre">beta</span></code> are values drawn from a gamma distribution. The parameters of the gamma distribution are also called <code class="docutils literal notranslate"><span class="pre">alpha</span></code> and <code class="docutils literal notranslate"><span class="pre">beta</span></code>, so that’s a bit confusing, but hopefully we can keep it straight.</p>
+<div class="cell tag_fill-in docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">with</span> <span class="n">pm</span><span class="o">.</span><span class="n">Model</span><span class="p">()</span> <span class="k">as</span> <span class="n">model</span><span class="p">:</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">with</span> <span class="n">pm</span><span class="o">.</span><span class="n">Model</span><span class="p">()</span> <span class="k">as</span> <span class="n">model2</span><span class="p">:</span>
     <span class="n">alpha</span> <span class="o">=</span> <span class="n">pm</span><span class="o">.</span><span class="n">Gamma</span><span class="p">(</span><span class="s1">&#39;alpha&#39;</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mi">4</span><span class="p">,</span> <span class="n">beta</span><span class="o">=</span><span class="mf">0.5</span><span class="p">)</span>
     <span class="n">beta</span> <span class="o">=</span> <span class="n">pm</span><span class="o">.</span><span class="n">Gamma</span><span class="p">(</span><span class="s1">&#39;beta&#39;</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mi">4</span><span class="p">,</span> <span class="n">beta</span><span class="o">=</span><span class="mf">0.5</span><span class="p">)</span>
     <span class="n">x1</span> <span class="o">=</span> <span class="n">pm</span><span class="o">.</span><span class="n">Beta</span><span class="p">(</span><span class="s1">&#39;x1&#39;</span><span class="p">,</span> <span class="n">alpha</span><span class="p">,</span> <span class="n">beta</span><span class="p">)</span>
@@ -458,22 +458,24 @@ But my choice of these parameters was almost arbitrary.</p>
 <p>Here’s the graph for this model.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">pm</span><span class="o">.</span><span class="n">model_to_graphviz</span><span class="p">(</span><span class="n">model</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">pm</span><span class="o">.</span><span class="n">model_to_graphviz</span><span class="p">(</span><span class="n">model2</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
 <img alt="_images/04_hierarchical_20_0.svg" src="_images/04_hierarchical_20_0.svg" /></div>
 </div>
-<p>This model is hierarchical because the variables can be arranged in layers.</p>
-<p>At the top level, <code class="docutils literal notranslate"><span class="pre">alpha</span></code> and <code class="docutils literal notranslate"><span class="pre">beta</span></code> are <strong>hyperparameters</strong> drawn from a two gamma distributions, which are called <strong>hyperprior distributions</strong>.</p>
-<p>At the next level, these hyperparameters are used to define the prior distributions of <code class="docutils literal notranslate"><span class="pre">x1</span></code> and <code class="docutils literal notranslate"><span class="pre">x2</span></code>.</p>
-<p>At the bottom level, these parameters are used to define the distributions of <code class="docutils literal notranslate"><span class="pre">k1</span></code> and <code class="docutils literal notranslate"><span class="pre">k2</span></code>, which are the observed values.</p>
+<p>There are three levels in this hierarchical model.</p>
+<ul class="simple">
+<li><p>At the top level, <code class="docutils literal notranslate"><span class="pre">alpha</span></code> and <code class="docutils literal notranslate"><span class="pre">beta</span></code> are <strong>hyperparameters</strong> drawn from a two gamma distributions, which are called <strong>hyperprior distributions</strong>.</p></li>
+<li><p>At the next level, these hyperparameters are used to define the prior distributions of <code class="docutils literal notranslate"><span class="pre">x1</span></code> and <code class="docutils literal notranslate"><span class="pre">x2</span></code>.</p></li>
+<li><p>At the bottom level, these parameters are used to define the distributions of <code class="docutils literal notranslate"><span class="pre">k1</span></code> and <code class="docutils literal notranslate"><span class="pre">k2</span></code>, which are the observed values.</p></li>
+</ul>
 <p>Before we sample from the posterior distributions, let’s look at the prior and prior predictive distributions.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">with</span> <span class="n">model</span><span class="p">:</span>
-    <span class="n">trace</span> <span class="o">=</span> <span class="n">pm</span><span class="o">.</span><span class="n">sample_prior_predictive</span><span class="p">(</span><span class="mi">500</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">with</span> <span class="n">model2</span><span class="p">:</span>
+    <span class="n">trace2</span> <span class="o">=</span> <span class="n">pm</span><span class="o">.</span><span class="n">sample_prior_predictive</span><span class="p">(</span><span class="mi">500</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -481,8 +483,8 @@ But my choice of these parameters was almost arbitrary.</p>
 <p>Here are the distributions of the hyperparameters, <code class="docutils literal notranslate"><span class="pre">alpha</span></code> and <code class="docutils literal notranslate"><span class="pre">beta</span></code>.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">plot_kde</span><span class="p">(</span><span class="n">trace</span><span class="p">[</span><span class="s1">&#39;alpha&#39;</span><span class="p">],</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;alpha&#39;</span><span class="p">)</span>
-<span class="n">plot_kde</span><span class="p">(</span><span class="n">trace</span><span class="p">[</span><span class="s1">&#39;beta&#39;</span><span class="p">],</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;beta&#39;</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">plot_kde</span><span class="p">(</span><span class="n">trace2</span><span class="p">[</span><span class="s1">&#39;alpha&#39;</span><span class="p">],</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;alpha&#39;</span><span class="p">)</span>
+<span class="n">plot_kde</span><span class="p">(</span><span class="n">trace2</span><span class="p">[</span><span class="s1">&#39;beta&#39;</span><span class="p">],</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;beta&#39;</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;Hyperparameter&#39;</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;Likelihood&#39;</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;Distribution of hyperparameters&#39;</span><span class="p">)</span>
@@ -497,14 +499,14 @@ But my choice of these parameters was almost arbitrary.</p>
 <p>And here’s the prior distributions for <code class="docutils literal notranslate"><span class="pre">x1</span></code> and <code class="docutils literal notranslate"><span class="pre">x2</span></code>.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">sample_prior_x1</span> <span class="o">=</span> <span class="n">trace</span><span class="p">[</span><span class="s1">&#39;x1&#39;</span><span class="p">]</span>
-<span class="n">sample_prior_x2</span> <span class="o">=</span> <span class="n">trace</span><span class="p">[</span><span class="s1">&#39;x2&#39;</span><span class="p">]</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">sample_prior_x1</span> <span class="o">=</span> <span class="n">trace2</span><span class="p">[</span><span class="s1">&#39;x1&#39;</span><span class="p">]</span>
+<span class="n">sample_prior_x2</span> <span class="o">=</span> <span class="n">trace2</span><span class="p">[</span><span class="s1">&#39;x2&#39;</span><span class="p">]</span>
 <span class="n">sample_prior_x1</span><span class="o">.</span><span class="n">mean</span><span class="p">(),</span> <span class="n">sample_prior_x2</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(0.5051493554654853, 0.5115711033457527)
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(0.5078479869951449, 0.5020630400297904)
 </pre></div>
 </div>
 </div>
@@ -522,14 +524,42 @@ But my choice of these parameters was almost arbitrary.</p>
 </div>
 </div>
 <p>The priors for <code class="docutils literal notranslate"><span class="pre">x1</span></code> and <code class="docutils literal notranslate"><span class="pre">x2</span></code> are actually the same, but based on random samples, they look a little different.</p>
+<p>Finally, here are the prior predictive distributions for <code class="docutils literal notranslate"><span class="pre">k1</span></code> and <code class="docutils literal notranslate"><span class="pre">k2</span></code>.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">sample_prior_pred_k1</span> <span class="o">=</span> <span class="n">trace2</span><span class="p">[</span><span class="s1">&#39;k1&#39;</span><span class="p">]</span>
+<span class="n">sample_prior_pred_k2</span> <span class="o">=</span> <span class="n">trace2</span><span class="p">[</span><span class="s1">&#39;k2&#39;</span><span class="p">]</span>
+<span class="n">sample_prior_pred_k1</span><span class="o">.</span><span class="n">mean</span><span class="p">(),</span> <span class="n">sample_prior_pred_k2</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(126.81, 125.704)
+</pre></div>
+</div>
+</div>
+</div>
+<p>Here’s what the prior predictive looks like.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">plot_hist</span><span class="p">(</span><span class="n">sample_prior_pred_k1</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;k1&#39;</span><span class="p">)</span>
+<span class="n">decorate_heads</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/04_hierarchical_31_0.png" src="_images/04_hierarchical_31_0.png" />
+</div>
+</div>
 <p>Now we’re ready to sample from the posteriors.</p>
 </div>
 <div class="section" id="posterior-distributions">
 <h2>Posterior distributions<a class="headerlink" href="#posterior-distributions" title="Permalink to this headline">¶</a></h2>
+<p>Let’s run the sampler.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">with</span> <span class="n">model</span><span class="p">:</span>
-    <span class="n">trace</span> <span class="o">=</span> <span class="n">pm</span><span class="o">.</span><span class="n">sample</span><span class="p">(</span><span class="mi">500</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">with</span> <span class="n">model2</span><span class="p">:</span>
+    <span class="n">trace2</span> <span class="o">=</span> <span class="n">pm</span><span class="o">.</span><span class="n">sample</span><span class="p">(</span><span class="mi">500</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -557,7 +587,7 @@ NUTS: [x2, x1, beta, alpha]
   <progress value='6000' class='' max='6000' style='width:300px; height:20px; vertical-align: middle;'></progress>
   100.00% [6000/6000 00:01<00:00 Sampling 4 chains, 0 divergences]
 </div>
-</div><div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Sampling 4 chains for 1_000 tune and 500 draw iterations (4_000 + 2_000 draws total) took 2 seconds.
+</div><div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Sampling 4 chains for 1_000 tune and 500 draw iterations (4_000 + 2_000 draws total) took 1 seconds.
 </pre></div>
 </div>
 </div>
@@ -565,34 +595,8 @@ NUTS: [x2, x1, beta, alpha]
 <p>And here are the results.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">with</span> <span class="n">model</span><span class="p">:</span>
-    <span class="n">az</span><span class="o">.</span><span class="n">plot_trace</span><span class="p">(</span><span class="n">trace</span><span class="p">)</span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<img alt="_images/04_hierarchical_32_0.png" src="_images/04_hierarchical_32_0.png" />
-</div>
-</div>
-<p>Here are the posterior distributions for <code class="docutils literal notranslate"><span class="pre">x1</span></code> and <code class="docutils literal notranslate"><span class="pre">x2</span></code>.</p>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">with</span> <span class="n">model</span><span class="p">:</span>
-    <span class="n">az</span><span class="o">.</span><span class="n">plot_posterior</span><span class="p">(</span><span class="n">trace</span><span class="p">,</span> <span class="n">var_names</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;x1&#39;</span><span class="p">,</span> <span class="s1">&#39;x2&#39;</span><span class="p">])</span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<img alt="_images/04_hierarchical_34_0.png" src="_images/04_hierarchical_34_0.png" />
-</div>
-</div>
-<p>In this example, they are not very different from what we got by estimating <code class="docutils literal notranslate"><span class="pre">x1</span></code> and <code class="docutils literal notranslate"><span class="pre">x2</span></code> separately.
-If we had less data, the hierarchical model would make more difference.</p>
-<p>But even if the distributions of the parameters are the same, the hierarchical model is different because the we have posterior distributions for the hyperparameters, <code class="docutils literal notranslate"><span class="pre">alpha</span></code> and <code class="docutils literal notranslate"><span class="pre">beta</span></code>.</p>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">with</span> <span class="n">model</span><span class="p">:</span>
-    <span class="n">az</span><span class="o">.</span><span class="n">plot_posterior</span><span class="p">(</span><span class="n">trace</span><span class="p">,</span> <span class="n">var_names</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;alpha&#39;</span><span class="p">,</span> <span class="s1">&#39;beta&#39;</span><span class="p">])</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">with</span> <span class="n">model2</span><span class="p">:</span>
+    <span class="n">az</span><span class="o">.</span><span class="n">plot_trace</span><span class="p">(</span><span class="n">trace2</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -600,11 +604,37 @@ If we had less data, the hierarchical model would make more difference.</p>
 <img alt="_images/04_hierarchical_36_0.png" src="_images/04_hierarchical_36_0.png" />
 </div>
 </div>
-<p>By themselves, they don’t mean very much, but we can use them to generate a sample from a beta distribution.</p>
+<p>Here are the posterior distributions for <code class="docutils literal notranslate"><span class="pre">x1</span></code> and <code class="docutils literal notranslate"><span class="pre">x2</span></code>.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">alphas</span> <span class="o">=</span> <span class="n">trace</span><span class="p">[</span><span class="s1">&#39;alpha&#39;</span><span class="p">]</span>
-<span class="n">betas</span> <span class="o">=</span> <span class="n">trace</span><span class="p">[</span><span class="s1">&#39;beta&#39;</span><span class="p">]</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">with</span> <span class="n">model2</span><span class="p">:</span>
+    <span class="n">az</span><span class="o">.</span><span class="n">plot_posterior</span><span class="p">(</span><span class="n">trace2</span><span class="p">,</span> <span class="n">var_names</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;x1&#39;</span><span class="p">,</span> <span class="s1">&#39;x2&#39;</span><span class="p">])</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/04_hierarchical_38_0.png" src="_images/04_hierarchical_38_0.png" />
+</div>
+</div>
+<p>In this example, they are not very different from what we got by estimating <code class="docutils literal notranslate"><span class="pre">x1</span></code> and <code class="docutils literal notranslate"><span class="pre">x2</span></code> separately.
+If we had less data, the hierarchical model would make more difference.</p>
+<p>But even if the distributions of the parameters are the same, the hierarchical model is different because the we have posterior distributions for the hyperparameters, <code class="docutils literal notranslate"><span class="pre">alpha</span></code> and <code class="docutils literal notranslate"><span class="pre">beta</span></code>.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">with</span> <span class="n">model2</span><span class="p">:</span>
+    <span class="n">az</span><span class="o">.</span><span class="n">plot_posterior</span><span class="p">(</span><span class="n">trace2</span><span class="p">,</span> <span class="n">var_names</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;alpha&#39;</span><span class="p">,</span> <span class="s1">&#39;beta&#39;</span><span class="p">])</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/04_hierarchical_40_0.png" src="_images/04_hierarchical_40_0.png" />
+</div>
+</div>
+<p>By themselves, they don’t mean very much, but we can use them to generate a sample from a beta distribution.</p>
+<div class="cell tag_fill-in docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">alphas</span> <span class="o">=</span> <span class="n">trace2</span><span class="p">[</span><span class="s1">&#39;alpha&#39;</span><span class="p">]</span>
+<span class="n">betas</span> <span class="o">=</span> <span class="n">trace2</span><span class="p">[</span><span class="s1">&#39;beta&#39;</span><span class="p">]</span>
 
 <span class="n">sample_posterior_x</span> <span class="o">=</span> <span class="n">pm</span><span class="o">.</span><span class="n">Beta</span><span class="o">.</span><span class="n">dist</span><span class="p">(</span><span class="n">alphas</span><span class="p">,</span> <span class="n">betas</span><span class="p">)</span><span class="o">.</span><span class="n">random</span><span class="p">()</span>
 <span class="n">sample_posterior_x</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span>
@@ -612,7 +642,7 @@ If we had less data, the hierarchical model would make more difference.</p>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>0.5027066378753872
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>0.496765387644031
 </pre></div>
 </div>
 </div>
@@ -621,23 +651,14 @@ If we had less data, the hierarchical model would make more difference.</p>
 Here’s what it looks like, compared to the prior.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">plot_kde</span><span class="p">(</span><span class="n">sample_prior_x</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;gray&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;prior&#39;</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">plot_kde</span><span class="p">(</span><span class="n">sample_prior_x1</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;gray&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;prior&#39;</span><span class="p">)</span>
 <span class="n">plot_kde</span><span class="p">(</span><span class="n">sample_posterior_x</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;posterior&#39;</span><span class="p">)</span>
 <span class="n">decorate_proportion</span><span class="p">()</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output traceback highlight-ipythontb notranslate"><div class="highlight"><pre><span></span><span class="gt">---------------------------------------------------------------------------</span>
-<span class="ne">NameError</span><span class="g g-Whitespace">                                 </span>Traceback (most recent call last)
-<span class="o">/</span><span class="n">tmp</span><span class="o">/</span><span class="n">ipykernel_82101</span><span class="o">/</span><span class="mf">3462805719.</span><span class="n">py</span> <span class="ow">in</span> <span class="o">&lt;</span><span class="n">module</span><span class="o">&gt;</span>
-<span class="ne">----&gt; </span><span class="mi">1</span> <span class="n">plot_kde</span><span class="p">(</span><span class="n">sample_prior_x</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;gray&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;prior&#39;</span><span class="p">)</span>
-<span class="g g-Whitespace">      </span><span class="mi">2</span> <span class="n">plot_kde</span><span class="p">(</span><span class="n">sample_posterior_x</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;posterior&#39;</span><span class="p">)</span>
-<span class="g g-Whitespace">      </span><span class="mi">3</span> <span class="n">decorate_proportion</span><span class="p">()</span>
-
-<span class="ne">NameError</span>: name &#39;sample_prior_x&#39; is not defined
-</pre></div>
-</div>
+<img alt="_images/04_hierarchical_44_0.png" src="_images/04_hierarchical_44_0.png" />
 </div>
 </div>
 <p>The posterior distribution is narrower than the posterior, which means we have more certainty about plausible values of <code class="docutils literal notranslate"><span class="pre">x</span></code>.
@@ -669,6 +690,126 @@ So let’s look at an example with more data, where we can see the utility of th
 </pre></div>
 </div>
 </div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>Hospital</th>
+      <th>Cases</th>
+      <th>Deaths</th>
+      <th>Death %</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>Bellevue Hospital Center</td>
+      <td>129</td>
+      <td>4</td>
+      <td>3.101</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>Harlem Hospital Center</td>
+      <td>35</td>
+      <td>1</td>
+      <td>2.857</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>Lenox Hill Hospital</td>
+      <td>228</td>
+      <td>18</td>
+      <td>7.894</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>Metropolitan Hospital Center</td>
+      <td>84</td>
+      <td>7</td>
+      <td>8.333</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>Mount Sinai Beth Israel</td>
+      <td>291</td>
+      <td>24</td>
+      <td>8.247</td>
+    </tr>
+    <tr>
+      <th>5</th>
+      <td>Mount Sinai Hospital</td>
+      <td>270</td>
+      <td>16</td>
+      <td>5.926</td>
+    </tr>
+    <tr>
+      <th>6</th>
+      <td>Mount Sinai Roosevelt</td>
+      <td>46</td>
+      <td>6</td>
+      <td>13.043</td>
+    </tr>
+    <tr>
+      <th>7</th>
+      <td>Mount Sinai St. Luke’s</td>
+      <td>293</td>
+      <td>19</td>
+      <td>6.485</td>
+    </tr>
+    <tr>
+      <th>8</th>
+      <td>NYU Hospitals Center</td>
+      <td>241</td>
+      <td>15</td>
+      <td>6.224</td>
+    </tr>
+    <tr>
+      <th>9</th>
+      <td>NYP Hospital - Allen Hospital</td>
+      <td>105</td>
+      <td>13</td>
+      <td>12.381</td>
+    </tr>
+    <tr>
+      <th>10</th>
+      <td>NYP Hospital - Columbia Presbyterian Center</td>
+      <td>353</td>
+      <td>25</td>
+      <td>7.082</td>
+    </tr>
+    <tr>
+      <th>11</th>
+      <td>NYP Hospital - New York Weill Cornell Center</td>
+      <td>250</td>
+      <td>11</td>
+      <td>4.400</td>
+    </tr>
+    <tr>
+      <th>12</th>
+      <td>NYP/Lower Manhattan Hospital</td>
+      <td>41</td>
+      <td>4</td>
+      <td>9.756</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
 </div>
 <p>The columns we need are <code class="docutils literal notranslate"><span class="pre">Cases</span></code>, which is the number of patients treated at each hospital, and <code class="docutils literal notranslate"><span class="pre">Deaths</span></code>, which is the number of those patients who died.</p>
 <div class="cell docutils container">
@@ -680,53 +821,97 @@ So let’s look at an example with more data, where we can see the utility of th
 </div>
 </div>
 <p>Here’s a hierarchical model that estimates the death rate for each hospital, and simultaneously estimates the distribution of rates across hospitals.</p>
-<div class="cell docutils container">
+<div class="cell tag_fill-in docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">with</span> <span class="n">pm</span><span class="o">.</span><span class="n">Model</span><span class="p">()</span> <span class="k">as</span> <span class="n">model</span><span class="p">:</span>
-    
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">with</span> <span class="n">pm</span><span class="o">.</span><span class="n">Model</span><span class="p">()</span> <span class="k">as</span> <span class="n">model4</span><span class="p">:</span>
     <span class="n">alpha</span> <span class="o">=</span> <span class="n">pm</span><span class="o">.</span><span class="n">Gamma</span><span class="p">(</span><span class="s1">&#39;alpha&#39;</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mi">4</span><span class="p">,</span> <span class="n">beta</span><span class="o">=</span><span class="mf">0.5</span><span class="p">)</span>
     <span class="n">beta</span> <span class="o">=</span> <span class="n">pm</span><span class="o">.</span><span class="n">Gamma</span><span class="p">(</span><span class="s1">&#39;beta&#39;</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mi">4</span><span class="p">,</span> <span class="n">beta</span><span class="o">=</span><span class="mf">0.5</span><span class="p">)</span>
-        
     <span class="n">xs</span> <span class="o">=</span> <span class="n">pm</span><span class="o">.</span><span class="n">Beta</span><span class="p">(</span><span class="s1">&#39;xs&#39;</span><span class="p">,</span> <span class="n">alpha</span><span class="p">,</span> <span class="n">beta</span><span class="p">,</span> <span class="n">shape</span><span class="o">=</span><span class="nb">len</span><span class="p">(</span><span class="n">data_ns</span><span class="p">))</span>
-    
     <span class="n">ks</span> <span class="o">=</span> <span class="n">pm</span><span class="o">.</span><span class="n">Binomial</span><span class="p">(</span><span class="s1">&#39;ks&#39;</span><span class="p">,</span> <span class="n">n</span><span class="o">=</span><span class="n">data_ns</span><span class="p">,</span> <span class="n">p</span><span class="o">=</span><span class="n">xs</span><span class="p">,</span> <span class="n">observed</span><span class="o">=</span><span class="n">data_ks</span><span class="p">)</span>
-    <span class="n">trace</span> <span class="o">=</span> <span class="n">pm</span><span class="o">.</span><span class="n">sample</span><span class="p">(</span><span class="mi">500</span><span class="p">)</span>
+    <span class="n">trace4</span> <span class="o">=</span> <span class="n">pm</span><span class="o">.</span><span class="n">sample</span><span class="p">(</span><span class="mi">500</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
+<div class="cell_output docutils container">
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Auto-assigning NUTS sampler...
+Initializing NUTS using jitter+adapt_diag...
+Multiprocess sampling (4 chains in 4 jobs)
+NUTS: [xs, beta, alpha]
+</pre></div>
+</div>
+<div class="output text_html">
+<div>
+    <style>
+        /* Turns off some styling */
+        progress {
+            /* gets rid of default border in Firefox and Opera. */
+            border: none;
+            /* Needs to be in here for Safari polyfill so background images work as expected. */
+            background-size: auto;
+        }
+        .progress-bar-interrupted, .progress-bar-interrupted::-webkit-progress-bar {
+            background: #F44336;
+        }
+    </style>
+  <progress value='6000' class='' max='6000' style='width:300px; height:20px; vertical-align: middle;'></progress>
+  100.00% [6000/6000 00:01<00:00 Sampling 4 chains, 0 divergences]
+</div>
+</div><div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Sampling 4 chains for 1_000 tune and 500 draw iterations (4_000 + 2_000 draws total) took 2 seconds.
+</pre></div>
+</div>
+</div>
+</div>
+<p>Here’s the graph representation of the model, showing that the observable is an array of 13 values.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">pm</span><span class="o">.</span><span class="n">model_to_graphviz</span><span class="p">(</span><span class="n">model4</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/04_hierarchical_54_0.svg" src="_images/04_hierarchical_54_0.svg" /></div>
 </div>
 <p>Here’s the trace.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">with</span> <span class="n">model</span><span class="p">:</span>
-    <span class="n">az</span><span class="o">.</span><span class="n">plot_trace</span><span class="p">(</span><span class="n">trace</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">with</span> <span class="n">model4</span><span class="p">:</span>
+    <span class="n">az</span><span class="o">.</span><span class="n">plot_trace</span><span class="p">(</span><span class="n">trace4</span><span class="p">)</span>
 </pre></div>
 </div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/04_hierarchical_56_0.png" src="_images/04_hierarchical_56_0.png" />
 </div>
 </div>
 <p>Here are the posterior distributions for the hospitals. Notice that some of them are wider than others, because some hospitals treated more patients than others.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">with</span> <span class="n">model</span><span class="p">:</span>
-    <span class="n">az</span><span class="o">.</span><span class="n">plot_posterior</span><span class="p">(</span><span class="n">trace</span><span class="p">,</span> <span class="n">var_names</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;xs&#39;</span><span class="p">])</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">with</span> <span class="n">model4</span><span class="p">:</span>
+    <span class="n">az</span><span class="o">.</span><span class="n">plot_posterior</span><span class="p">(</span><span class="n">trace4</span><span class="p">,</span> <span class="n">var_names</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;xs&#39;</span><span class="p">])</span>
 </pre></div>
 </div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/04_hierarchical_58_0.png" src="_images/04_hierarchical_58_0.png" />
 </div>
 </div>
 <p>Here are the posterior distributions for <code class="docutils literal notranslate"><span class="pre">alpha</span></code> and <code class="docutils literal notranslate"><span class="pre">beta</span></code>.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">with</span> <span class="n">model</span><span class="p">:</span>
-    <span class="n">az</span><span class="o">.</span><span class="n">plot_posterior</span><span class="p">(</span><span class="n">trace</span><span class="p">,</span> <span class="n">var_names</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;alpha&#39;</span><span class="p">,</span> <span class="s1">&#39;beta&#39;</span><span class="p">])</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">with</span> <span class="n">model4</span><span class="p">:</span>
+    <span class="n">az</span><span class="o">.</span><span class="n">plot_posterior</span><span class="p">(</span><span class="n">trace4</span><span class="p">,</span> <span class="n">var_names</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;alpha&#39;</span><span class="p">,</span> <span class="s1">&#39;beta&#39;</span><span class="p">])</span>
 </pre></div>
 </div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/04_hierarchical_60_0.png" src="_images/04_hierarchical_60_0.png" />
 </div>
 </div>
 <p>The posterior distributions of the hyperparameters don’t mean much by themselves, but we can use them to compute the posterior distribution of <code class="docutils literal notranslate"><span class="pre">x</span></code>.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">alphas</span> <span class="o">=</span> <span class="n">trace</span><span class="p">[</span><span class="s1">&#39;alpha&#39;</span><span class="p">]</span>
-<span class="n">betas</span> <span class="o">=</span> <span class="n">trace</span><span class="p">[</span><span class="s1">&#39;beta&#39;</span><span class="p">]</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">alphas</span> <span class="o">=</span> <span class="n">trace4</span><span class="p">[</span><span class="s1">&#39;alpha&#39;</span><span class="p">]</span>
+<span class="n">betas</span> <span class="o">=</span> <span class="n">trace4</span><span class="p">[</span><span class="s1">&#39;beta&#39;</span><span class="p">]</span>
 </pre></div>
 </div>
 </div>
@@ -739,20 +924,20 @@ So let’s look at an example with more data, where we can see the utility of th
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>0.5002854348121786
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>0.09928590465113996
 </pre></div>
 </div>
 </div>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">with</span> <span class="n">model</span><span class="p">:</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">with</span> <span class="n">model4</span><span class="p">:</span>
     <span class="n">az</span><span class="o">.</span><span class="n">plot_posterior</span><span class="p">(</span><span class="n">sample_posterior_x</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/04_hierarchical_58_0.png" src="_images/04_hierarchical_58_0.png" />
+<img alt="_images/04_hierarchical_64_0.png" src="_images/04_hierarchical_64_0.png" />
 </div>
 </div>
 <p>This distribution represents what we believe about the distribution of death rates across different hospitals, based on the data.</p>
@@ -767,15 +952,13 @@ I chose the parameters of that distribution, <code class="docutils literal notra
 <p>An alternative is to use a hierarchical model, where <code class="docutils literal notranslate"><span class="pre">alpha</span></code> and <code class="docutils literal notranslate"><span class="pre">beta</span></code> are hyperparameters.  Then we can use data to update estimate the distribution of <code class="docutils literal notranslate"><span class="pre">mu</span></code> for each team, and to estimate the distribution of <code class="docutils literal notranslate"><span class="pre">mu</span></code> across teams.</p>
 <p>Of course, now we need a prior distribution for <code class="docutils literal notranslate"><span class="pre">alpha</span></code> and <code class="docutils literal notranslate"><span class="pre">beta</span></code>.  A common choice is the half Cauchy distribution (see <a class="reference external" href="http://www.stat.columbia.edu/~gelman/research/published/taumain.pdf">Gelman</a>), but on advice of counsel, I’m going with exponential.</p>
 <p>Here’s a model that generates the prior distribution of <code class="docutils literal notranslate"><span class="pre">mu</span></code>.</p>
-<div class="cell docutils container">
+<div class="cell tag_fill-in docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">model</span> <span class="o">=</span> <span class="n">pm</span><span class="o">.</span><span class="n">Model</span><span class="p">()</span>
-
-<span class="k">with</span> <span class="n">model</span><span class="p">:</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">with</span> <span class="n">pm</span><span class="o">.</span><span class="n">Model</span><span class="p">()</span> <span class="k">as</span> <span class="n">model5</span><span class="p">:</span>
     <span class="n">alpha</span> <span class="o">=</span> <span class="n">pm</span><span class="o">.</span><span class="n">Exponential</span><span class="p">(</span><span class="s1">&#39;alpha&#39;</span><span class="p">,</span> <span class="n">lam</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
     <span class="n">beta</span> <span class="o">=</span> <span class="n">pm</span><span class="o">.</span><span class="n">Exponential</span><span class="p">(</span><span class="s1">&#39;beta&#39;</span><span class="p">,</span> <span class="n">lam</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
     <span class="n">mu</span> <span class="o">=</span> <span class="n">pm</span><span class="o">.</span><span class="n">Gamma</span><span class="p">(</span><span class="s1">&#39;mu&#39;</span><span class="p">,</span> <span class="n">alpha</span><span class="p">,</span> <span class="n">beta</span><span class="p">)</span>
-    <span class="n">trace</span> <span class="o">=</span> <span class="n">pm</span><span class="o">.</span><span class="n">sample_prior_predictive</span><span class="p">(</span><span class="mi">1000</span><span class="p">)</span>
+    <span class="n">trace5</span> <span class="o">=</span> <span class="n">pm</span><span class="o">.</span><span class="n">sample_prior_predictive</span><span class="p">(</span><span class="mi">1000</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -788,13 +971,13 @@ I chose the parameters of that distribution, <code class="docutils literal notra
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">sample_prior_mu</span> <span class="o">=</span> <span class="n">trace</span><span class="p">[</span><span class="s1">&#39;mu&#39;</span><span class="p">]</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">sample_prior_mu</span> <span class="o">=</span> <span class="n">trace5</span><span class="p">[</span><span class="s1">&#39;mu&#39;</span><span class="p">]</span>
 <span class="n">sample_prior_mu</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>7.214462002468779
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>12.408112214486023
 </pre></div>
 </div>
 </div>
@@ -820,17 +1003,15 @@ I chose the parameters of that distribution, <code class="docutils literal notra
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/04_hierarchical_65_0.png" src="_images/04_hierarchical_65_0.png" />
+<img alt="_images/04_hierarchical_71_0.png" src="_images/04_hierarchical_71_0.png" />
 </div>
 </div>
 <p>This is a long-tailed distribution, with highest probability for values less than 100, but it admits the possibility that <code class="docutils literal notranslate"><span class="pre">mu</span></code> could be orders of magnitude bigger. Unreasonable as that might seem, it’s probably what we want in a non-committal prior.</p>
 <p>Now suppose a team plays one game and scores 4 goals.
 We can run the hierarchical model with this data.</p>
-<div class="cell docutils container">
+<div class="cell tag_fill-in docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">model</span> <span class="o">=</span> <span class="n">pm</span><span class="o">.</span><span class="n">Model</span><span class="p">()</span>
-
-<span class="k">with</span> <span class="n">model</span><span class="p">:</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">with</span> <span class="n">pm</span><span class="o">.</span><span class="n">Model</span><span class="p">()</span> <span class="k">as</span> <span class="n">model6</span><span class="p">:</span>
     <span class="n">alpha</span> <span class="o">=</span> <span class="n">pm</span><span class="o">.</span><span class="n">Exponential</span><span class="p">(</span><span class="s1">&#39;alpha&#39;</span><span class="p">,</span> <span class="n">lam</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
     <span class="n">beta</span> <span class="o">=</span> <span class="n">pm</span><span class="o">.</span><span class="n">Exponential</span><span class="p">(</span><span class="s1">&#39;beta&#39;</span><span class="p">,</span> <span class="n">lam</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
     <span class="n">mu</span> <span class="o">=</span> <span class="n">pm</span><span class="o">.</span><span class="n">Gamma</span><span class="p">(</span><span class="s1">&#39;mu&#39;</span><span class="p">,</span> <span class="n">alpha</span><span class="p">,</span> <span class="n">beta</span><span class="p">)</span>
@@ -842,18 +1023,18 @@ We can run the hierarchical model with this data.</p>
 <p>Here’s what the model looks like.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">pm</span><span class="o">.</span><span class="n">model_to_graphviz</span><span class="p">(</span><span class="n">model</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">pm</span><span class="o">.</span><span class="n">model_to_graphviz</span><span class="p">(</span><span class="n">model6</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/04_hierarchical_70_0.svg" src="_images/04_hierarchical_70_0.svg" /></div>
+<img alt="_images/04_hierarchical_75_0.svg" src="_images/04_hierarchical_75_0.svg" /></div>
 </div>
 <p>Now we can run the sampler.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">with</span> <span class="n">model</span><span class="p">:</span>
-    <span class="n">trace</span> <span class="o">=</span> <span class="n">pm</span><span class="o">.</span><span class="n">sample</span><span class="p">(</span><span class="mi">500</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">with</span> <span class="n">model6</span><span class="p">:</span>
+    <span class="n">trace6</span> <span class="o">=</span> <span class="n">pm</span><span class="o">.</span><span class="n">sample</span><span class="p">(</span><span class="mi">500</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -882,9 +1063,8 @@ NUTS: [mu, beta, alpha]
   100.00% [6000/6000 00:01<00:00 Sampling 4 chains, 7 divergences]
 </div>
 </div><div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Sampling 4 chains for 1_000 tune and 500 draw iterations (4_000 + 2_000 draws total) took 1 seconds.
-There were 4 divergences after tuning. Increase `target_accept` or reparameterize.
 There were 2 divergences after tuning. Increase `target_accept` or reparameterize.
-There was 1 divergence after tuning. Increase `target_accept` or reparameterize.
+There were 5 divergences after tuning. Increase `target_accept` or reparameterize.
 </pre></div>
 </div>
 </div>
@@ -893,26 +1073,26 @@ There was 1 divergence after tuning. Increase `target_accept` or reparameterize.
 When we plot the trace, we see these divergences as gray lines.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">with</span> <span class="n">model</span><span class="p">:</span>
-    <span class="n">az</span><span class="o">.</span><span class="n">plot_trace</span><span class="p">(</span><span class="n">trace</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">with</span> <span class="n">model6</span><span class="p">:</span>
+    <span class="n">az</span><span class="o">.</span><span class="n">plot_trace</span><span class="p">(</span><span class="n">trace6</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/04_hierarchical_74_0.png" src="_images/04_hierarchical_74_0.png" />
+<img alt="_images/04_hierarchical_79_0.png" src="_images/04_hierarchical_79_0.png" />
 </div>
 </div>
 <p>There are ways to tune the sampler to reduce the number of divergences, but I won’t bother because the visual diagnostics look fine.</p>
 <p>Here’s the posterior distribution of <code class="docutils literal notranslate"><span class="pre">mu</span></code>.  The posterior mean is close to the observed value, which is what we expect with a weakly informative prior.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">sample_post_mu</span> <span class="o">=</span> <span class="n">trace</span><span class="p">[</span><span class="s1">&#39;mu&#39;</span><span class="p">]</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">sample_post_mu</span> <span class="o">=</span> <span class="n">trace6</span><span class="p">[</span><span class="s1">&#39;mu&#39;</span><span class="p">]</span>
 <span class="n">sample_post_mu</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>3.640421570982143
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>3.546398799071753
 </pre></div>
 </div>
 </div>
@@ -925,7 +1105,7 @@ When we plot the trace, we see these divergences as gray lines.</p>
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/04_hierarchical_77_0.png" src="_images/04_hierarchical_77_0.png" />
+<img alt="_images/04_hierarchical_82_0.png" src="_images/04_hierarchical_82_0.png" />
 </div>
 </div>
 <p>After one game, it seems like we have learned a lot about typical scoring rates in hockey.</p>
@@ -935,16 +1115,14 @@ When we plot the trace, we see these divergences as gray lines.</p>
 <p>Here’s the hierarchical version of the model for two teams.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">model</span> <span class="o">=</span> <span class="n">pm</span><span class="o">.</span><span class="n">Model</span><span class="p">()</span>
-
-<span class="k">with</span> <span class="n">model</span><span class="p">:</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">with</span> <span class="n">pm</span><span class="o">.</span><span class="n">Model</span><span class="p">()</span> <span class="k">as</span> <span class="n">model7</span><span class="p">:</span>
     <span class="n">alpha</span> <span class="o">=</span> <span class="n">pm</span><span class="o">.</span><span class="n">Exponential</span><span class="p">(</span><span class="s1">&#39;alpha&#39;</span><span class="p">,</span> <span class="n">lam</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
     <span class="n">beta</span> <span class="o">=</span> <span class="n">pm</span><span class="o">.</span><span class="n">Exponential</span><span class="p">(</span><span class="s1">&#39;beta&#39;</span><span class="p">,</span> <span class="n">lam</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
     <span class="n">mu_A</span> <span class="o">=</span> <span class="n">pm</span><span class="o">.</span><span class="n">Gamma</span><span class="p">(</span><span class="s1">&#39;mu_A&#39;</span><span class="p">,</span> <span class="n">alpha</span><span class="p">,</span> <span class="n">beta</span><span class="p">)</span>
     <span class="n">mu_B</span> <span class="o">=</span> <span class="n">pm</span><span class="o">.</span><span class="n">Gamma</span><span class="p">(</span><span class="s1">&#39;mu_B&#39;</span><span class="p">,</span> <span class="n">alpha</span><span class="p">,</span> <span class="n">beta</span><span class="p">)</span>
     <span class="n">goals_A</span> <span class="o">=</span> <span class="n">pm</span><span class="o">.</span><span class="n">Poisson</span><span class="p">(</span><span class="s1">&#39;goals_A&#39;</span><span class="p">,</span> <span class="n">mu_A</span><span class="p">,</span> <span class="n">observed</span><span class="o">=</span><span class="p">[</span><span class="mi">5</span><span class="p">,</span><span class="mi">3</span><span class="p">])</span>
     <span class="n">goals_B</span> <span class="o">=</span> <span class="n">pm</span><span class="o">.</span><span class="n">Poisson</span><span class="p">(</span><span class="s1">&#39;goals_B&#39;</span><span class="p">,</span> <span class="n">mu_B</span><span class="p">,</span> <span class="n">observed</span><span class="o">=</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">])</span>
-    <span class="n">trace</span> <span class="o">=</span> <span class="n">pm</span><span class="o">.</span><span class="n">sample</span><span class="p">(</span><span class="mi">500</span><span class="p">)</span>
+    <span class="n">trace7</span> <span class="o">=</span> <span class="n">pm</span><span class="o">.</span><span class="n">sample</span><span class="p">(</span><span class="mi">500</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -970,39 +1148,46 @@ NUTS: [mu_B, mu_A, beta, alpha]
         }
     </style>
   <progress value='6000' class='' max='6000' style='width:300px; height:20px; vertical-align: middle;'></progress>
-  100.00% [6000/6000 00:01<00:00 Sampling 4 chains, 10 divergences]
+  100.00% [6000/6000 00:01<00:00 Sampling 4 chains, 5 divergences]
 </div>
 </div><div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Sampling 4 chains for 1_000 tune and 500 draw iterations (4_000 + 2_000 draws total) took 2 seconds.
-There were 2 divergences after tuning. Increase `target_accept` or reparameterize.
-There was 1 divergence after tuning. Increase `target_accept` or reparameterize.
-There were 7 divergences after tuning. Increase `target_accept` or reparameterize.
+There were 5 divergences after tuning. Increase `target_accept` or reparameterize.
 </pre></div>
 </div>
 </div>
 </div>
-<p>We can use <code class="docutils literal notranslate"><span class="pre">traceplot</span></code> to review the results and do some visual diagnostics.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">with</span> <span class="n">model</span><span class="p">:</span>
-    <span class="n">az</span><span class="o">.</span><span class="n">plot_trace</span><span class="p">(</span><span class="n">trace</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">pm</span><span class="o">.</span><span class="n">model_to_graphviz</span><span class="p">(</span><span class="n">model7</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/04_hierarchical_82_0.png" src="_images/04_hierarchical_82_0.png" />
+<img alt="_images/04_hierarchical_87_0.svg" src="_images/04_hierarchical_87_0.svg" /></div>
+</div>
+<p>We can use <code class="docutils literal notranslate"><span class="pre">traceplot</span></code> to review the results and do some visual diagnostics.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">with</span> <span class="n">model7</span><span class="p">:</span>
+    <span class="n">az</span><span class="o">.</span><span class="n">plot_trace</span><span class="p">(</span><span class="n">trace7</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/04_hierarchical_89_0.png" src="_images/04_hierarchical_89_0.png" />
 </div>
 </div>
 <p>Here are the posterior distributions for the two teams.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">mu_A</span> <span class="o">=</span> <span class="n">trace</span><span class="p">[</span><span class="s1">&#39;mu_A&#39;</span><span class="p">]</span>
-<span class="n">mu_B</span> <span class="o">=</span> <span class="n">trace</span><span class="p">[</span><span class="s1">&#39;mu_B&#39;</span><span class="p">]</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">mu_A</span> <span class="o">=</span> <span class="n">trace7</span><span class="p">[</span><span class="s1">&#39;mu_A&#39;</span><span class="p">]</span>
+<span class="n">mu_B</span> <span class="o">=</span> <span class="n">trace7</span><span class="p">[</span><span class="s1">&#39;mu_B&#39;</span><span class="p">]</span>
 <span class="n">mu_B</span><span class="o">.</span><span class="n">mean</span><span class="p">(),</span> <span class="n">mu_A</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(1.2878991513742521, 3.606925183605613)
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(1.2969943718770693, 3.5909073781182475)
 </pre></div>
 </div>
 </div>
@@ -1016,7 +1201,7 @@ There were 7 divergences after tuning. Increase `target_accept` or reparameteriz
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/04_hierarchical_85_0.png" src="_images/04_hierarchical_85_0.png" />
+<img alt="_images/04_hierarchical_92_0.png" src="_images/04_hierarchical_92_0.png" />
 </div>
 </div>
 <p>And here’s the probability that A is the better team.</p>
@@ -1027,7 +1212,7 @@ There were 7 divergences after tuning. Increase `target_accept` or reparameteriz
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>0.955
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>0.963
 </pre></div>
 </div>
 </div>
@@ -1064,9 +1249,7 @@ For games that went into overtime, I included only goals scored during regulatio
 <p>Here’s how we can get the data into the model.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">model</span> <span class="o">=</span> <span class="n">pm</span><span class="o">.</span><span class="n">Model</span><span class="p">()</span>
-
-<span class="k">with</span> <span class="n">model</span><span class="p">:</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">with</span> <span class="n">pm</span><span class="o">.</span><span class="n">Model</span><span class="p">()</span> <span class="k">as</span> <span class="n">model8</span><span class="p">:</span>
     <span class="n">alpha</span> <span class="o">=</span> <span class="n">pm</span><span class="o">.</span><span class="n">Exponential</span><span class="p">(</span><span class="s1">&#39;alpha&#39;</span><span class="p">,</span> <span class="n">lam</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
     <span class="n">beta</span> <span class="o">=</span> <span class="n">pm</span><span class="o">.</span><span class="n">Exponential</span><span class="p">(</span><span class="s1">&#39;beta&#39;</span><span class="p">,</span> <span class="n">lam</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
     
@@ -1076,7 +1259,7 @@ For games that went into overtime, I included only goals scored during regulatio
         <span class="n">mu</span><span class="p">[</span><span class="n">name</span><span class="p">]</span> <span class="o">=</span> <span class="n">pm</span><span class="o">.</span><span class="n">Gamma</span><span class="p">(</span><span class="s1">&#39;mu_&#39;</span><span class="o">+</span><span class="n">name</span><span class="p">,</span> <span class="n">alpha</span><span class="p">,</span> <span class="n">beta</span><span class="p">)</span>
         <span class="n">goals</span><span class="p">[</span><span class="n">name</span><span class="p">]</span> <span class="o">=</span> <span class="n">pm</span><span class="o">.</span><span class="n">Poisson</span><span class="p">(</span><span class="n">name</span><span class="p">,</span> <span class="n">mu</span><span class="p">[</span><span class="n">name</span><span class="p">],</span> <span class="n">observed</span><span class="o">=</span><span class="n">observed</span><span class="p">)</span>
         
-    <span class="n">trace</span> <span class="o">=</span> <span class="n">pm</span><span class="o">.</span><span class="n">sample</span><span class="p">(</span><span class="mi">500</span><span class="p">)</span>
+    <span class="n">trace8</span> <span class="o">=</span> <span class="n">pm</span><span class="o">.</span><span class="n">sample</span><span class="p">(</span><span class="mi">500</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -1102,51 +1285,62 @@ NUTS: [mu_TBL21, mu_MTL21, mu_TBL20, mu_DAL20, mu_BOS19, mu_STL19, mu_WSH18, mu_
         }
     </style>
   <progress value='6000' class='' max='6000' style='width:300px; height:20px; vertical-align: middle;'></progress>
-  100.00% [6000/6000 00:05<00:00 Sampling 4 chains, 9 divergences]
+  100.00% [6000/6000 00:06<00:00 Sampling 4 chains, 28 divergences]
 </div>
 </div><div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Sampling 4 chains for 1_000 tune and 500 draw iterations (4_000 + 2_000 draws total) took 6 seconds.
-There were 2 divergences after tuning. Increase `target_accept` or reparameterize.
-There were 6 divergences after tuning. Increase `target_accept` or reparameterize.
-There was 1 divergence after tuning. Increase `target_accept` or reparameterize.
+There were 11 divergences after tuning. Increase `target_accept` or reparameterize.
+There were 5 divergences after tuning. Increase `target_accept` or reparameterize.
+There were 12 divergences after tuning. Increase `target_accept` or reparameterize.
 </pre></div>
 </div>
 </div>
 </div>
-<p>And here are the results.</p>
+<p>Here’s the graph representation of the model:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">with</span> <span class="n">model</span><span class="p">:</span>
-    <span class="n">az</span><span class="o">.</span><span class="n">plot_trace</span><span class="p">(</span><span class="n">trace</span><span class="p">,</span> <span class="n">var_names</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;alpha&#39;</span><span class="p">,</span> <span class="s1">&#39;beta&#39;</span><span class="p">])</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">viz</span> <span class="o">=</span> <span class="n">pm</span><span class="o">.</span><span class="n">model_to_graphviz</span><span class="p">(</span><span class="n">model8</span><span class="p">)</span>
+<span class="n">viz</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/04_hierarchical_93_0.png" src="_images/04_hierarchical_93_0.png" />
+<img alt="_images/04_hierarchical_100_0.svg" src="_images/04_hierarchical_100_0.svg" /></div>
+</div>
+<p>And here are the results.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">with</span> <span class="n">model8</span><span class="p">:</span>
+    <span class="n">az</span><span class="o">.</span><span class="n">plot_trace</span><span class="p">(</span><span class="n">trace8</span><span class="p">,</span> <span class="n">var_names</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;alpha&#39;</span><span class="p">,</span> <span class="s1">&#39;beta&#39;</span><span class="p">])</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/04_hierarchical_103_0.png" src="_images/04_hierarchical_103_0.png" />
 </div>
 </div>
 <p>Here are the posterior means for the hyperparameters.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">sample_post_alpha</span> <span class="o">=</span> <span class="n">trace</span><span class="p">[</span><span class="s1">&#39;alpha&#39;</span><span class="p">]</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">sample_post_alpha</span> <span class="o">=</span> <span class="n">trace8</span><span class="p">[</span><span class="s1">&#39;alpha&#39;</span><span class="p">]</span>
 <span class="n">sample_post_alpha</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>5.122848755909788
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>5.177219004767863
 </pre></div>
 </div>
 </div>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">sample_post_beta</span> <span class="o">=</span> <span class="n">trace</span><span class="p">[</span><span class="s1">&#39;beta&#39;</span><span class="p">]</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">sample_post_beta</span> <span class="o">=</span> <span class="n">trace8</span><span class="p">[</span><span class="s1">&#39;beta&#39;</span><span class="p">]</span>
 <span class="n">sample_post_beta</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>2.027317316342455
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>2.0625962780860365
 </pre></div>
 </div>
 </div>
@@ -1155,14 +1349,14 @@ There was 1 divergence after tuning. Increase `target_accept` or reparameterize.
 That’s right – time travel.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">sample_post_mu_TBL21</span> <span class="o">=</span> <span class="n">trace</span><span class="p">[</span><span class="s1">&#39;mu_TBL21&#39;</span><span class="p">]</span>
-<span class="n">sample_post_mu_MTL21</span> <span class="o">=</span> <span class="n">trace</span><span class="p">[</span><span class="s1">&#39;mu_MTL21&#39;</span><span class="p">]</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">sample_post_mu_TBL21</span> <span class="o">=</span> <span class="n">trace8</span><span class="p">[</span><span class="s1">&#39;mu_TBL21&#39;</span><span class="p">]</span>
+<span class="n">sample_post_mu_MTL21</span> <span class="o">=</span> <span class="n">trace8</span><span class="p">[</span><span class="s1">&#39;mu_MTL21&#39;</span><span class="p">]</span>
 <span class="n">sample_post_mu_TBL21</span><span class="o">.</span><span class="n">mean</span><span class="p">(),</span> <span class="n">sample_post_mu_MTL21</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(3.1427334192125693, 1.7223064467517362)
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(3.1448589236370306, 1.7336583634668075)
 </pre></div>
 </div>
 </div>
@@ -1176,7 +1370,7 @@ That’s right – time travel.</p>
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/04_hierarchical_99_0.png" src="_images/04_hierarchical_99_0.png" />
+<img alt="_images/04_hierarchical_109_0.png" src="_images/04_hierarchical_109_0.png" />
 </div>
 </div>
 <p>Here’s the updated chance that Tampa Bay is the better team.</p>
@@ -1187,7 +1381,7 @@ That’s right – time travel.</p>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>0.9625
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>0.9595
 </pre></div>
 </div>
 </div>
